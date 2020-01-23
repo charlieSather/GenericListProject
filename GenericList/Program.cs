@@ -10,15 +10,26 @@ namespace GenericList
     {
         static void Main(string[] args)
         {
-            List<int> ints = new List<int>();
+            List<int> ints = new List<int>();           
             
             GenericList<int> myList = new GenericList<int>();
 
-            for(int i = 0; i < 9; i++)
+            GenericList<string> strList = new GenericList<string>();
+
+
+            for (int i = 0; i < 9; i++)
             {
                 myList.Add(i);
                 ints.Add(i);
+                strList.Add(i.ToString());
             }
+
+            myList.Remove(4);
+            myList.Remove(8);
+
+            strList.Remove("3");
+
+            ints.Remove(4);
 
 
         }

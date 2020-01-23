@@ -62,6 +62,7 @@ namespace GenericListTesting
 
             Assert.AreEqual(3, myList[1]);
         }
+
         [TestMethod]
         public void Remove_ListRemovesOnlyFirstMatch_ListShiftsAndKeepsAnyDuplicatesLeft()
         {

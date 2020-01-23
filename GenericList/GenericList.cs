@@ -41,9 +41,7 @@ namespace GenericList
                 }
             }
         }
-
-
-
+               
         public void Add(T item)
         {
             if (Capacity == 0)
@@ -76,28 +74,54 @@ namespace GenericList
 
         public bool Remove(T item)
         {
-
             //if T not same as GenericList<T> throw Exception immediately
             bool removedItem = false;
-
 
             if (Count < 1)
             {
                 return removedItem;
             }
+
+
             for (int i = 0; i < Count; i++)
             {
-
                 //Equals() fails on most reference types, users need to override Equals() method accordingly or use a workaround 
                 if (items[i].Equals(item))
                 {
 
+                    if(i != Count - 1)
+                    {
+                       T[] newList = new T[Capacity];
 
+                        for(int j = 0; j < Count - 1; j++)
+                        {
+                            if (j >= i)
+                            {
+                                newList[j] = items[j + 1];
+                            }
+                            else
+                            {
+                                newList[j] = items[j];
+                            }
+                        }
+                        items = newList;
+                        Count--;
+                    }
+                    else
+                    {
+                        T[] newList = new T[Capacity];
 
-
+                        for (int j = 0; j < Count - 1; j++)
+                        {                           
+                            newList[j] = items[j];
+                        }
+                        items = newList;
+                        Count--;
+                    }
+                    removedItem = true;
+                    break;
                 }
             }
-
             return removedItem;
         }
 
@@ -114,6 +138,17 @@ namespace GenericList
         public GenericList<T> Zip(GenericList<T> list)
         {
             return new GenericList<T>();
+        }
+        public override string ToString()
+        {
+            StringBuilder str = new StringBuilder();
+
+            for(int i = 0; i < Count; i++)
+            {
+                str.Append(items[i].ToString());
+            }
+
+            return str.ToString();
         }
 
 
