@@ -16,11 +16,18 @@ namespace GenericList
         public T this[int index]
         {
             get { return items[index]; }
+            set { items[index] = value; }
         }
 
         public void Add(T item)
         {
+                                 
+        }
 
+        public bool Remove(T item)
+        {
+
+            return false;
         }
 
     }
