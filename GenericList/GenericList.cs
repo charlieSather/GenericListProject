@@ -6,7 +6,22 @@ using System.Threading.Tasks;
 
 namespace GenericList
 {
-    class GenericList
+    public class GenericList<T>
     {
+        T[] items;
+        public int Count { get; private set; }
+        public int Capacity { get; set; }
+
+
+        public T this[int index]
+        {
+            get { return items[index]; }
+        }
+
+        public void Add(T item)
+        {
+
+        }
+
     }
 }
