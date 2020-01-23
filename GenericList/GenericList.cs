@@ -15,7 +15,15 @@ namespace GenericList
 
         public T this[int index]
         {
-            get { return items[index]; }
+            get
+            {
+                //if (index >= 0 && index < Count)
+                {
+                    return items[index];
+                }
+              
+
+            }
             set { items[index] = value; }
         }
 
@@ -29,6 +37,17 @@ namespace GenericList
 
             return false;
         }
+
+        public static GenericList<T> operator +(GenericList<T> listOne, GenericList<T> listTwo) 
+        {
+            return new GenericList<T>();
+        }
+
+        public static GenericList<T> operator -(GenericList<T> listOne, GenericList<T> listTwo)
+        {
+            return new GenericList<T>();
+        }
+
 
     }
 }
