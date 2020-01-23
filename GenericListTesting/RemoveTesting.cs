@@ -13,6 +13,7 @@ namespace GenericListTesting
             GenericList<int> myList = new GenericList<int>();
             Assert.AreEqual(false, myList.Remove(0));
         }
+
         [TestMethod]
         public void Remove_RemovingItemNotInList_ListRemainsUnchanged()
         {
@@ -45,7 +46,7 @@ namespace GenericListTesting
             myList.Add(1);
             myList.Add(2);
             myList.Add(3);
-
+            myList.Remove(2);
             Assert.AreEqual(2, myList.Count);
         }
 
@@ -60,6 +61,19 @@ namespace GenericListTesting
             myList.Remove(2);
 
             Assert.AreEqual(3, myList[1]);
+        }
+        [TestMethod]
+        public void Remove_ListRemovesOnlyFirstMatch_ListShiftsAndKeepsAnyDuplicatesLeft()
+        {
+            GenericList<int> myList = new GenericList<int>();
+
+            myList.Add(1);
+            myList.Add(2);
+            myList.Add(3);
+            myList.Add(2);
+            myList.Remove(2);
+
+            Assert.AreEqual(2, myList[2]);
         }
 
     }

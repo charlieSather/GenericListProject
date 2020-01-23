@@ -11,9 +11,16 @@ namespace GenericList
         static void Main(string[] args)
         {
             List<int> ints = new List<int>();
-            ints.Add(1);
-            ints.Add(1);
-            ints.Add(1);
+            
+            GenericList<int> myList = new GenericList<int>();
+
+            for(int i = 0; i < 9; i++)
+            {
+                myList.Add(i);
+                ints.Add(i);
+            }
+
+
         }
     }
 }
