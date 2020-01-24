@@ -42,6 +42,21 @@ namespace GenericList
 
             GenericList<int> listThree = listOne - listTwo;
 
+            GenericList<int> odd = new GenericList<int>();
+            GenericList<int> even = new GenericList<int>();
+            GenericList<int> empty = new GenericList<int>();
+
+
+            odd.Add(1);
+            odd.Add(3);
+            odd.Add(5);
+
+            even.Add(2);
+
+            GenericList<int> result = odd.Zip(even);
+            GenericList<int> emptyResult = odd.Zip(empty);
+
+
 
 
             List<int> one = new List<int> { 1, 2, 3 };

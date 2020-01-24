@@ -40,7 +40,7 @@ namespace GenericListTesting
 
             GenericList<int> result = odd.Zip(even);
 
-            Assert.AreEqual(3, result[2]);
+            Assert.AreEqual(2, result[1]);
         }
 
         [TestMethod]
@@ -50,6 +50,7 @@ namespace GenericListTesting
             GenericList<int> even = new GenericList<int>();
 
             odd.Add(1);
+            odd.Add(3);
 
             even.Add(2);
             even.Add(4);
@@ -57,7 +58,7 @@ namespace GenericListTesting
 
             GenericList<int> result = odd.Zip(even);
 
-            Assert.AreEqual(4, result[2]);
+            Assert.AreEqual(4, result[3]);
         }
 
         [TestMethod]

@@ -138,7 +138,7 @@ namespace GenericListTesting
             GenericList<int> result = new GenericList<int>();
             result = myList - myListTwo;
 
-            Assert.AreEqual(1, myList[0]);
+            Assert.AreEqual(1, result[0]);
         }
 
         [TestMethod]

@@ -127,80 +127,98 @@ namespace GenericList
 
         public static GenericList<T> operator +(GenericList<T> listOne, GenericList<T> listTwo)
         {
+            GenericList<T> newList = new GenericList<T>();
+
             if (listTwo.Count > 0)
             {
-                int newCount = listTwo.Count + listOne.Count;
-
-                if (newCount > listOne.Capacity)
+                for (int i = 0; i < listOne.Count; i++)
                 {
-                    GenericList<T> newList = new GenericList<T>();
-                    for (int i = 0; i < listOne.Count; i++)
-                    {
-                        newList.Add(listOne[i]);
-                    }
-                    for (int i = 0; i < listTwo.Count; i++)
-                    {
-                        newList.Add(listTwo[i]);
-                    }
-                    return newList;
+                    newList.Add(listOne[i]);
                 }
-                else
+                for (int i = 0; i < listTwo.Count; i++)
                 {
-                    for (int i = 0; i < listTwo.Count; i++)
-                    {
-                        listOne.Add(listTwo[i]);
-                    }
-                    return listOne;
+                    newList.Add(listTwo[i]);
                 }
+                return newList;
             }
             else
             {
-                return listOne;
+                for (int i = 0; i < listOne.Count; i++)
+                {
+                    newList.Add(listOne[i]);
+                }
+                return newList;
             }
         }
 
         public static GenericList<T> operator -(GenericList<T> listOne, GenericList<T> listTwo)
         {
-            if(listTwo.Count > 1)
+            GenericList<T> newList = MakeCopy(listOne);
+
+            if (listTwo.Count > 0)
             {
-                for(int i = 0; i < listTwo.Count; i++)
+                for (int i = 0; i < listTwo.Count; i++)
                 {
-                    for(int j = 0; j < listOne.Count; j++)
+                    for (int j = 0; j < newList.Count; j++)
                     {
-                        if (listOne[j].Equals(listTwo[i]))
+                        if (newList[j].Equals(listTwo[i]))
                         {
-                            listOne.Remove(listTwo[i]);
-                            return listOne - listTwo;
+                            newList.Remove(listTwo[i]);
+                            return newList - listTwo;
                         }
                     }
                 }
-                return listOne;
+                return newList;
             }
             else
             {
-                return listOne;
-            }          
+                return newList;
+            }
         }
 
         public GenericList<T> Zip(GenericList<T> list)
         {
-            if(list.Count > 1)
+            GenericList<T> newList = new GenericList<T>();
+
+            if (list.Count > 0)
             {
-               // if(list)
-
-
-
-                for(int i = 0; i < list.Count; i++)
+                if(Count < list.Count)
                 {
-
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        if (i < Count)
+                        {
+                            newList.Add(this[i]);
+                        }
+                        newList.Add(list[i]);
+                    }
                 }
+                else if (Count > list.Count)
+                {
+                    for (int i = 0; i < Count; i++)
+                    {
+                        newList.Add(this[i]);
+                        if (i < list.Count)
+                        {
+                            newList.Add(list[i]);
+                        }
+                    }
+                }
+                else
+                {                   
+                    for (int i = 0; i < Count; i++)
+                    {
+                        newList.Add(this[i]);
+                        newList.Add(list[i]);
+                    }
+                }                
             }
             else
             {
-                return this;
+                newList = MakeCopy(this);
             }
 
-
+            return newList;
         }
 
         public override string ToString()
@@ -215,6 +233,16 @@ namespace GenericList
             return str.ToString();
         }
 
+        public static GenericList<T> MakeCopy(GenericList<T> list)
+        {
+            GenericList<T> myCopy = new GenericList<T>();
 
+            for(int i = 0; i < list.Count; i++)
+            {
+                myCopy.Add(list[i]);
+            }
+
+            return myCopy;
+        }
     }
 }
