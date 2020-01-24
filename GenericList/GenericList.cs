@@ -9,8 +9,28 @@ namespace GenericList
     public class GenericList<T>
     {
         T[] items;
-        public int Count { get; private set; }
-        public int Capacity { get; set; }
+
+        int count;
+        public int Count { get { return count; } }
+        public int Capacity
+        {
+            get
+            {
+                return Capacity;
+            }
+            
+            set
+            {
+                if(value < Count)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+                else
+                {
+                    Capacity = value;
+                }
+            }
+        }
         public GenericList()
         {
             items = new T[0];
@@ -49,7 +69,7 @@ namespace GenericList
                 items = new T[4];
                 Capacity = 4;
                 items[0] = item;
-                Count++;
+                count++;
             }
             else if (Capacity == Count)
             {
@@ -63,12 +83,12 @@ namespace GenericList
 
                 items = newList;
                 items[Count] = item;
-                Count++;
+                count++;
             }
             else
             {
                 items[Count] = item;
-                Count++;
+                count++;
             }
         }
 
@@ -105,7 +125,7 @@ namespace GenericList
                             }
                         }
                         items = newList;
-                        Count--;
+                        count--;
                     }
                     else
                     {
@@ -116,7 +136,7 @@ namespace GenericList
                             newList[j] = items[j];
                         }
                         items = newList;
-                        Count--;
+                        count--;
                     }
                     removedItem = true;
                     break;
@@ -286,7 +306,6 @@ namespace GenericList
                         }
                     }
                 }
-
             }
             else
             {
