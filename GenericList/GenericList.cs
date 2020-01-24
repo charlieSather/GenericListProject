@@ -333,5 +333,16 @@ namespace GenericList
                 this.Add(item);
             }
         }
+
+
+        public void Reverse()
+        {
+            for (int i = 0; i < Count / 2; i++)
+            {
+                T temp = items[i];
+                items[i] = items[Count - (i + 1)];
+                items[Count - (i + 1)] = temp;
+            }
+        }
     }
 }

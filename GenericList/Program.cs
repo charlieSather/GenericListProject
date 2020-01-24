@@ -74,8 +74,6 @@ namespace GenericList
             GenericList<int> emptyResult = odd.Zip(empty);
 
 
-
-
             List<int> one = new List<int> { 1, 2, 3 };
             List<int> two = new List<int> { 4, 5, 6 };
 
@@ -93,6 +91,8 @@ namespace GenericList
 
             GenericList<int> lists = new GenericList<int>();
             lists.AddRange(new List<int> { 1, 2, 3, 4, 5, 6, 7 });
+
+            lists.Reverse();
 
             Console.WriteLine(ints);
 
