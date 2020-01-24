@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GenericCompareTo.cs" />
     <Compile Include="GenericList.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="Program.cs" />

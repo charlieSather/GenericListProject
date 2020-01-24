@@ -170,7 +170,7 @@ namespace GenericList
                         {
                             count++;
                         }
-                    }                    
+                    }
                 }
                 return newList;
             }
@@ -247,6 +247,95 @@ namespace GenericList
             }
 
             return myCopy;
+        }
+
+        public void QuickSort()
+        {
+            if (Count < 1)
+            {
+                return;
+            }
+
+            if (this[0].GetType().Equals(1.GetType()))
+            {
+                for (int i = 0; i < Count - 1; i++)
+                {
+                    for (int j = i + 1; j < Count; j++)
+                    {
+                        object firstObj = items[i];
+                        int firstItem = (int) firstObj;
+
+                        object secondObject = items[j];
+                        int secondItem = (int) secondObject;
+
+                        if (secondItem < firstItem)
+                        {
+                            T temp = items[i];
+                            items[i] = items[j];
+                            items[j] = temp;
+                        }
+                    }
+                }
+
+            }
+            else if (this[0].GetType().Equals("".GetType()))
+            {
+                for (int i = 0; i < Count - 1; i++)
+                {
+                    for (int j = i + 1; j < Count; j++)
+                    {
+                        object firstObj = items[i];
+                        string firstItem = (string) firstObj;
+
+                        object secondObject = items[j];
+                        string secondItem = (string) secondObject;
+
+                        if (secondItem.CompareTo(firstItem) < 0)
+                        {
+                            T temp = items[i];
+                            items[i] = items[j];
+                            items[j] = temp;
+                        }
+                    }
+                }
+
+            }
+            else
+            {
+                //Sort for type not supported.
+            }
+        }
+
+        public bool Contains(T item)
+        {
+            bool itemFound = false;
+
+            for (int i = 0; i < Count; i++)
+            {
+                if (items[i].Equals(item))
+                {
+                    itemFound = true;
+                    break;
+                }
+            }
+            return itemFound;
+        }
+
+        public int GetIndexAt(T item)
+        {
+            int indexFound = -1;
+
+            for (int i = 0; i < Count; i++)
+            {
+                if (items[i].Equals(item))
+                {
+                    indexFound = i;
+                    break;
+                }
+
+            }
+
+            return indexFound;
         }
     }
 }

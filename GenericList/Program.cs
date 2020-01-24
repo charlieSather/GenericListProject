@@ -31,14 +31,31 @@ namespace GenericList
             GenericList<int> listTwo = new GenericList<int>();
 
             listOne.Add(2);
-            listOne.Add(2);
-            listOne.Add(2);
-            listOne.Add(2);
+            listOne.Add(10);
+            listOne.Add(7);
+            listOne.Add(5);
             listOne.Add(1);
 
             listTwo.Add(2);
             listTwo.Add(3);
             listTwo.Add(4);
+
+            listOne.QuickSort();
+
+            List<string> strings = new List<string> { "Charlie", "Dave", "David", "Chris", "Trevor", "Adam" };
+            strings.Sort();
+
+            GenericList<string> myStrings = new GenericList<string>();
+
+            myStrings.Add("Charlie");
+            myStrings.Add("Dave");
+            myStrings.Add("David");
+            myStrings.Add("Chris");
+            myStrings.Add("Trevor");
+            myStrings.Add("Adam");
+
+            myStrings.QuickSort();
+
 
             GenericList<int> listThree = listOne - listTwo;
 
@@ -75,6 +92,11 @@ namespace GenericList
             ints.Remove(10);
 
             Console.WriteLine(ints);
+
+            List<int> sortedList = new List<int> { 1, 5, 3, 10, 15, 3, 4, 6 };
+            sortedList.Sort();
+
+            Console.WriteLine(sortedList.ToString());
 
 
         }
