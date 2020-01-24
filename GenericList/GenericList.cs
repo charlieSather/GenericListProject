@@ -261,14 +261,8 @@ namespace GenericList
                 for (int i = 0; i < Count - 1; i++)
                 {
                     for (int j = i + 1; j < Count; j++)
-                    {
-                        object firstObj = items[i];
-                        int firstItem = (int) firstObj;
-
-                        object secondObject = items[j];
-                        int secondItem = (int) secondObject;
-
-                        if (secondItem < firstItem)
+                    {                        
+                        if ( (int) (object) items[j] < (int)(object) items[i])
                         {
                             T temp = items[i];
                             items[i] = items[j];
@@ -284,13 +278,7 @@ namespace GenericList
                 {
                     for (int j = i + 1; j < Count; j++)
                     {
-                        object firstObj = items[i];
-                        string firstItem = (string) firstObj;
-
-                        object secondObject = items[j];
-                        string secondItem = (string) secondObject;
-
-                        if (secondItem.CompareTo(firstItem) < 0)
+                        if (((string)(object)items[j]).CompareTo((string)(object)items[i]) < 0)
                         {
                             T temp = items[i];
                             items[i] = items[j];
