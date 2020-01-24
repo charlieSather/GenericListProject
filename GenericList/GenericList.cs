@@ -41,7 +41,7 @@ namespace GenericList
                 }
             }
         }
-               
+
         public void Add(T item)
         {
             if (Capacity == 0)
@@ -89,11 +89,11 @@ namespace GenericList
                 if (items[i].Equals(item))
                 {
 
-                    if(i != Count - 1)
+                    if (i != Count - 1)
                     {
-                       T[] newList = new T[Capacity];
+                        T[] newList = new T[Capacity];
 
-                        for(int j = 0; j < Count - 1; j++)
+                        for (int j = 0; j < Count - 1; j++)
                         {
                             if (j >= i)
                             {
@@ -112,7 +112,7 @@ namespace GenericList
                         T[] newList = new T[Capacity];
 
                         for (int j = 0; j < Count - 1; j++)
-                        {                           
+                        {
                             newList[j] = items[j];
                         }
                         items = newList;
@@ -127,23 +127,87 @@ namespace GenericList
 
         public static GenericList<T> operator +(GenericList<T> listOne, GenericList<T> listTwo)
         {
-            return new GenericList<T>();
+            if (listTwo.Count > 0)
+            {
+                int newCount = listTwo.Count + listOne.Count;
+
+                if (newCount > listOne.Capacity)
+                {
+                    GenericList<T> newList = new GenericList<T>();
+                    for (int i = 0; i < listOne.Count; i++)
+                    {
+                        newList.Add(listOne[i]);
+                    }
+                    for (int i = 0; i < listTwo.Count; i++)
+                    {
+                        newList.Add(listTwo[i]);
+                    }
+                    return newList;
+                }
+                else
+                {
+                    for (int i = 0; i < listTwo.Count; i++)
+                    {
+                        listOne.Add(listTwo[i]);
+                    }
+                    return listOne;
+                }
+            }
+            else
+            {
+                return listOne;
+            }
         }
 
         public static GenericList<T> operator -(GenericList<T> listOne, GenericList<T> listTwo)
         {
-            return new GenericList<T>();
+            if(listTwo.Count > 1)
+            {
+                for(int i = 0; i < listTwo.Count; i++)
+                {
+                    for(int j = 0; j < listOne.Count; j++)
+                    {
+                        if (listOne[j].Equals(listTwo[i]))
+                        {
+                            listOne.Remove(listTwo[i]);
+                            return listOne - listTwo;
+                        }
+                    }
+                }
+                return listOne;
+            }
+            else
+            {
+                return listOne;
+            }          
         }
 
         public GenericList<T> Zip(GenericList<T> list)
         {
-            return new GenericList<T>();
+            if(list.Count > 1)
+            {
+               // if(list)
+
+
+
+                for(int i = 0; i < list.Count; i++)
+                {
+
+                }
+            }
+            else
+            {
+                return this;
+            }
+
+
         }
+
         public override string ToString()
         {
             StringBuilder str = new StringBuilder();
 
-            for(int i = 0; i < Count; i++)
+            for (int i = 0; i < Count; i++)
             {
                 str.Append(items[i].ToString());
             }

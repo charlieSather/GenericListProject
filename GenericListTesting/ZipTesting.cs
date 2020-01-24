@@ -76,5 +76,20 @@ namespace GenericListTesting
 
             Assert.AreEqual(4, result.Count);
         }
+
+        [TestMethod]
+        public void ZipEmptyList()
+        {
+            GenericList<int> odd = new GenericList<int>();
+            GenericList<int> even = new GenericList<int>();
+
+            odd.Add(1);
+            odd.Add(3);
+            odd.Add(5);          
+
+            GenericList<int> result = odd.Zip(even);
+
+            Assert.AreEqual(odd.Count, result.Count);
+        }
     }
 }
