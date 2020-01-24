@@ -159,14 +159,18 @@ namespace GenericList
             {
                 for (int i = 0; i < listTwo.Count; i++)
                 {
-                    for (int j = 0; j < newList.Count; j++)
+                    int count = 0;
+                    while (count < newList.Count)
                     {
-                        if (newList[j].Equals(listTwo[i]))
+                        if (newList[count].Equals(listTwo[i]))
                         {
                             newList.Remove(listTwo[i]);
-                            return newList - listTwo;
                         }
-                    }
+                        else
+                        {
+                            count++;
+                        }
+                    }                    
                 }
                 return newList;
             }
@@ -182,7 +186,7 @@ namespace GenericList
 
             if (list.Count > 0)
             {
-                if(Count < list.Count)
+                if (Count < list.Count)
                 {
                     for (int i = 0; i < list.Count; i++)
                     {
@@ -205,13 +209,13 @@ namespace GenericList
                     }
                 }
                 else
-                {                   
+                {
                     for (int i = 0; i < Count; i++)
                     {
                         newList.Add(this[i]);
                         newList.Add(list[i]);
                     }
-                }                
+                }
             }
             else
             {
@@ -237,7 +241,7 @@ namespace GenericList
         {
             GenericList<T> myCopy = new GenericList<T>();
 
-            for(int i = 0; i < list.Count; i++)
+            for (int i = 0; i < list.Count; i++)
             {
                 myCopy.Add(list[i]);
             }
