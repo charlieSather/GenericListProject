@@ -91,6 +91,9 @@ namespace GenericList
 
             ints.Remove(10);
 
+            GenericList<int> lists = new GenericList<int>();
+            lists.AddRange(new List<int> { 1, 2, 3, 4, 5, 6, 7 });
+
             Console.WriteLine(ints);
 
             List<int> sortedList = new List<int> { 1, 5, 3, 10, 15, 3, 4, 6 };
