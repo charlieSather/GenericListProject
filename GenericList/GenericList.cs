@@ -96,7 +96,7 @@ namespace GenericList
             count++;
         }
 
-        public bool Remove(T item)
+        public bool RemoveOne(T item)
         {
             //if T not same as GenericList<T> throw Exception immediately
             bool removedItem = false;
@@ -146,6 +146,40 @@ namespace GenericList
             }
             return removedItem;
         }
+        public bool Remove(T item)
+        {
+            bool removedItem = false;
+
+            for(int i = 0; i < Count; i++)
+            {
+                if (items[i].Equals(item))
+                {
+                    items = RemoveIndex(i);
+                    removedItem = true;
+                    break;
+                }
+            }
+            return removedItem;
+
+        }
+
+        private T[] RemoveIndex(int index)
+        {
+            T[] newArray = new T[Capacity];
+            int counter = 0;
+
+            for(int i = 0; i < Count; i++)
+            {
+                if(i == index)
+                {
+                    i++;
+                }
+                newArray[counter] = items[i];
+                counter++;
+            }
+            count--;
+            return newArray;
+        }
 
 
         public bool RemoveTwo(T item)
@@ -162,7 +196,6 @@ namespace GenericList
             }
             if (indexFound >= 0)
             {
-
                 T[] temp = new T[Capacity];
 
                 for (int i = 0; i < Count - 1; i++)
@@ -187,55 +220,67 @@ namespace GenericList
         {
             GenericList<T> newList = new GenericList<T>();
 
-            if (listTwo.Count > 0)
+            for (int i = 0; i < listOne.Count; i++)
             {
-                for (int i = 0; i < listOne.Count; i++)
-                {
-                    newList.Add(listOne[i]);
-                }
-                for (int i = 0; i < listTwo.Count; i++)
-                {
-                    newList.Add(listTwo[i]);
-                }
-                return newList;
+                newList.Add(listOne[i]);
             }
-            else
+            for (int i = 0; i < listTwo.count; i++)
             {
-                for (int i = 0; i < listOne.Count; i++)
-                {
-                    newList.Add(listOne[i]);
-                }
-                return newList;
+                newList.Add(listTwo[i]);
             }
+            return newList;
+
+            //if (listTwo.Count > 0)
+            //{
+            //    for (int i = 0; i < listOne.Count; i++)
+            //    {
+            //        newList.Add(listOne[i]);
+            //    }
+            //    for (int i = 0; i < listTwo.Count; i++)
+            //    {
+            //        newList.Add(listTwo[i]);
+            //    }
+            //    return newList;
+            //}
+            //else
+            //{
+            //    for (int i = 0; i < listOne.Count; i++)
+            //    {
+            //        newList.Add(listOne[i]);
+            //    }
+            //    return newList;
+            //}
+
+
         }
 
         public static GenericList<T> operator -(GenericList<T> listOne, GenericList<T> listTwo)
         {
             GenericList<T> newList = MakeCopy(listOne);
 
-            if (listTwo.Count > 0)
-            {
+            //if (listTwo.Count > 0)
+            //{
                 for (int i = 0; i < listTwo.Count; i++)
                 {
-                    int count = 0;
-                    while (count < newList.Count)
+                    int counter = 0;
+                    while (counter < newList.Count)
                     {
-                        if (newList[count].Equals(listTwo[i]))
+                        if (newList[counter].Equals(listTwo[i]))
                         {
                             newList.Remove(listTwo[i]);
                         }
                         else
                         {
-                            count++;
+                            counter++;
                         }
                     }
                 }
                 return newList;
-            }
-            else
-            {
-                return newList;
-            }
+            //}
+            //else
+            //{
+            //    return newList;
+            //}
         }
 
         public GenericList<T> Zip(GenericList<T> list)
@@ -312,39 +357,39 @@ namespace GenericList
                 return;
             }
 
-            if (this[0] is int)
+            for (int i = 0; i < Count - 1; i++)
             {
-                for (int i = 0; i < Count - 1; i++)
+                for (int j = i + 1; j < Count; j++)
                 {
-                    for (int j = i + 1; j < Count; j++)
+                    if (Compare(items[j], items[i]) < 0)
                     {
-                        if ((int)(object)items[j] < (int)(object)items[i])
-                        {
-                            T temp = items[i];
-                            items[i] = items[j];
-                            items[j] = temp;
-                        }
+                        T temp = items[i];
+                        items[i] = items[j];
+                        items[j] = temp;
                     }
                 }
             }
-            else if (this[0] is string)
+
+
+        }
+
+        public int Compare(T itemOne, T itemTwo)
+        {
+            if(itemOne is int)
             {
-                for (int i = 0; i < Count - 1; i++)
-                {
-                    for (int j = i + 1; j < Count; j++)
-                    {
-                        if (((string)(object)items[j]).CompareTo((string)(object)items[i]) < 0)
-                        {
-                            T temp = items[i];
-                            items[i] = items[j];
-                            items[j] = temp;
-                        }
-                    }
-                }
+                return ((int)(object)itemOne).CompareTo((int)(object)itemTwo);
+            }
+            else if (itemOne is string)
+            {
+                return ((string)(object)itemOne).CompareTo((string)(object)itemTwo);
+            }
+            else if (itemOne is char)
+            {
+                return ((char)(object)itemOne).CompareTo((char)(object)itemTwo);
             }
             else
             {
-                //Sort for type not supported.
+                throw new InvalidOperationException();
             }
         }
 
@@ -396,7 +441,7 @@ namespace GenericList
             }
         }
 
-        //returns Inumerator without inheriting the interface.
+        //returns IEnumerator without inheriting the interface.
 
         //public IEnumerator<T> Loop()
         //{
@@ -450,7 +495,6 @@ namespace GenericList
                 {
                     return Current;
                 }
-
             }
 
             public T Current
@@ -485,12 +529,6 @@ namespace GenericList
             {
 
             }
-
-
-
-
         }
-
-
     }
 }
