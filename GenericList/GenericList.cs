@@ -429,10 +429,11 @@ namespace GenericList
         public T[] CopyTo(int index, T[] array, int arrayIndex, int count)
         {
            
-            for (int i = index; i < count; i++)
+            for (int i = index; count > 0; i++)
             {
                 array[arrayIndex] = items[i];
                 arrayIndex++;
+                count--;
             }
             return array;
         }
@@ -447,6 +448,47 @@ namespace GenericList
             return array;
         }
 
+        public int FindIndex(Predicate<T> match)
+        {
+            int index = -1;
+            for(int i = 0; i < Count; i++)
+            {
+                if (match(items[i]))
+                {
+                    index = i;
+                    break;
+                }
+            }
+            return index;
+        }
+        public int FindIndex(int startIndex, Predicate<T> match)
+        {
+            int index = -1;
+            for (int i = startIndex; i < Count; i++)
+            {
+                if (match(items[i]))
+                {
+                    index = i;
+                    break;
+                }
+            }
+            return index;
+        }
+
+        public int FindIndex(int startIndex, int count, Predicate<T> match)
+        {
+            int index = -1;
+            for (int i = startIndex; count > 0; i++)
+            {
+                if (match(items[i]))
+                {
+                    index = i;
+                    break;
+                }
+                count--;
+            }
+            return index;
+        }
 
 
         public IEnumerator GetEnumerator()

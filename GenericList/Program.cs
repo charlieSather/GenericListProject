@@ -126,6 +126,10 @@ namespace GenericList
 
             List<int> thisList = sortedList.GetRange(0, sortedList.Count);
 
+            Console.WriteLine(myStrings.FindIndex(x => x == "Charlie"));
+
+            
+
 
             Console.ReadLine();
 

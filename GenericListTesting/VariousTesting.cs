@@ -87,7 +87,7 @@ namespace GenericListTesting
             GenericList<int> myList = new GenericList<int>();
 
             myList.AddRange(new List<int> { 1, 2, 3, 4, 5, 6 });
-            myList.RemoveRange(1,4);
+            myList.RemoveRange(1, 4);
 
             Assert.AreEqual("16", myList.ToString());
         }
@@ -98,7 +98,7 @@ namespace GenericListTesting
             GenericList<int> myList = new GenericList<int>();
 
             myList.AddRange(new List<int> { 1, 2, 3, 4, 5, 6 });
-            myList.RemoveRange(0,6);
+            myList.RemoveRange(0, 6);
 
             Assert.AreEqual("", myList.ToString());
         }
@@ -109,7 +109,7 @@ namespace GenericListTesting
             GenericList<int> myList = new GenericList<int>();
 
             myList.AddRange(new List<int> { 1, 2, 3, 4, 5, 6 });
-            myList.RemoveRange(1,8);
+            myList.RemoveRange(1, 8);
 
             Assert.AreEqual("1", myList.ToString());
         }
@@ -160,7 +160,7 @@ namespace GenericListTesting
             myList.CopyTo(result);
 
             StringBuilder sb = new StringBuilder();
-            foreach(int i in result)
+            foreach (int i in result)
             {
                 sb.Append(i.ToString());
             }
@@ -212,7 +212,7 @@ namespace GenericListTesting
 
             int[] result = new int[9];
 
-            myList.CopyTo(0,result, 2 , 4);
+            myList.CopyTo(0, result, 2, 4);
 
             StringBuilder sb = new StringBuilder();
             foreach (int i in result)
@@ -222,6 +222,64 @@ namespace GenericListTesting
 
             Assert.AreEqual("001234000", sb.ToString());
         }
+
+        [TestMethod]
+        public void TestFindindexOfString()
+        {
+            GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie" };
+
+            Assert.AreEqual(3, myList.FindIndex(x => x == "Charlie"));
+
+        }
+
+        [TestMethod]
+        public void TestFindindexCantFindString_ExpectNegativeOne()
+        {
+            GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie" };
+
+            Assert.AreEqual(-1, myList.FindIndex(x => x == "Alex"));
+
+        }
+
+        [TestMethod]
+        public void TestFindindexFromStartIndex()
+        {
+            GenericList<int> myList = new GenericList<int> { 1, 2, 3, 4, 5, 6 };
+
+            Assert.AreEqual(3, myList.FindIndex(3, x => x == 4));
+
+        }
+
+
+        [TestMethod]
+        public void TestFindindexFromStartIndexFindsNothing()
+        {
+            GenericList<int> myList = new GenericList<int> { 1, 2, 3, 4, 5, 6 };
+
+            Assert.AreEqual(-1, myList.FindIndex(3, x => x == 2));
+
+        }
+
+        [TestMethod]
+        public void TestFindIndexFromStartIndexAndGivenCount()
+        {
+            GenericList<int> myList = new GenericList<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+            Assert.AreEqual(8, myList.FindIndex(3, 6, x => x == 9));
+
+        }
+
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        [TestMethod]
+        public void TestFindIndexFromStartIndexCountIndexOutOfBounds()
+        {
+            GenericList<int> myList = new GenericList<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+            Assert.AreEqual(3, myList.FindIndex(3, 10, x => x == 12));
+
+        }
+
+
 
 
 
