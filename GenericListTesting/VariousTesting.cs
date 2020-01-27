@@ -113,5 +113,44 @@ namespace GenericListTesting
             Assert.AreEqual("1", myList.ToString());
         }
 
+        [TestMethod]
+        public void TestGetRangeThreeItems()
+        {
+            GenericList<int> myList = new GenericList<int>();
+
+            myList.AddRange(new List<int> { 1, 2, 3, 4, 5, 6 });
+
+            GenericList<int> result = myList.GetRange(1, 3);
+
+            Assert.AreEqual("234", result.ToString());
+        }
+
+        [TestMethod]
+        public void TestGetRangeCountExceedsListCount()
+        {
+            GenericList<int> myList = new GenericList<int>();
+
+            myList.AddRange(new List<int> { 1, 2, 3, 4, 5, 6 });
+            GenericList<int> result = myList.GetRange(3, 8);
+
+            Assert.AreEqual("456", result.ToString());
+        }
+
+
+        [TestMethod]
+        public void TestGetRangeStartingIndex()
+        {
+            GenericList<int> myList = new GenericList<int>();
+
+            myList.AddRange(new List<int> { 1, 2, 3, 4, 5, 6 });
+            GenericList<int> result = myList.GetRange(1);
+
+            Assert.AreEqual("23456", result.ToString());
+        }
+
+
+
+
+
     }
 }

@@ -390,6 +390,32 @@ namespace GenericList
             items = new T[Capacity];
         }
 
+        public GenericList<T> GetRange(int index, int count)
+        {
+            GenericList<T> newList = new GenericList<T>();
+
+            for(int i = index; i < Count && count > 0; i++)
+            {
+                newList.Add(items[i]);
+                count--;
+            }
+
+            return newList;
+
+        }
+        public GenericList<T> GetRange(int index)
+        {
+            GenericList<T> newList = new GenericList<T>();
+
+            for (int i = index; i < Count; i++)
+            {
+                newList.Add(items[i]);
+            }
+
+            return newList;
+
+        }
+
 
         public IEnumerator GetEnumerator()
         {

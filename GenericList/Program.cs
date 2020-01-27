@@ -124,6 +124,9 @@ namespace GenericList
             newLists.Sort();
             newLists.QuickSort();
 
+            List<int> thisList = sortedList.GetRange(0, sortedList.Count);
+
+
             Console.ReadLine();
 
 
