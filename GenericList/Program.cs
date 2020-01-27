@@ -11,10 +11,12 @@ namespace GenericList
         static void Main(string[] args)
         {
             List<int> ints = new List<int>();           
-            
+
             GenericList<int> myList = new GenericList<int>();
             GenericList<string> strList = new GenericList<string>();
             GenericList<Person> people = new GenericList<Person>();
+
+            
 
             Console.WriteLine(ints);
 
@@ -100,6 +102,15 @@ namespace GenericList
             sortedList.Sort();
 
             Console.WriteLine(sortedList.ToString());
+
+            foreach(int item in sortedList)
+            {
+                Console.WriteLine(item);
+            }
+
+            GenericList<string> newList = new GenericList<string> { "dave's", "List", "Can't", "Do", "This" };
+
+            Console.ReadLine();
 
 
         }

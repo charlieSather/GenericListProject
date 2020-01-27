@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,34 +7,44 @@ using System.Threading.Tasks;
 
 namespace GenericList
 {
-    public class GenericList<T>
+    public class GenericList<T> : IEnumerable<T>
     {
+        static T[] _items;
+
         T[] items;
 
         int count;
         public int Count { get { return count; } }
+        int capacity;
+        static int _capacity;
+
         public int Capacity
         {
             get
             {
-                return Capacity;
+                return capacity;
             }
-            
+
             set
             {
-                if(value < Count)
+                if (value < Count)
                 {
                     throw new ArgumentOutOfRangeException();
                 }
                 else
                 {
-                    Capacity = value;
+                    capacity = value;
                 }
             }
         }
         public GenericList()
         {
             items = new T[0];
+        }
+        static GenericList()
+        {
+            _items = new T[0];
+            _capacity = 4;
         }
 
         public T this[int index]
@@ -68,8 +79,6 @@ namespace GenericList
             {
                 items = new T[4];
                 Capacity = 4;
-                items[0] = item;
-                count++;
             }
             else if (Capacity == Count)
             {
@@ -82,14 +91,9 @@ namespace GenericList
                 }
 
                 items = newList;
-                items[Count] = item;
-                count++;
             }
-            else
-            {
-                items[Count] = item;
-                count++;
-            }
+            items[Count] = item;
+            count++;
         }
 
         public bool Remove(T item)
@@ -102,13 +106,11 @@ namespace GenericList
                 return removedItem;
             }
 
-
             for (int i = 0; i < Count; i++)
             {
                 //Equals() fails on most reference types, users need to override Equals() method accordingly or use a workaround 
                 if (items[i].Equals(item))
                 {
-
                     if (i != Count - 1)
                     {
                         T[] newList = new T[Capacity];
@@ -143,6 +145,42 @@ namespace GenericList
                 }
             }
             return removedItem;
+        }
+
+
+        public bool RemoveTwo(T item)
+        {
+            int indexFound = -1;
+            bool removed = false;
+            for (int i = 0; i < Count; i++)
+            {
+                if (items[i].Equals(item))
+                {
+                    indexFound = i;
+                    break;
+                }
+            }
+            if (indexFound >= 0)
+            {
+
+                T[] temp = new T[Capacity];
+
+                for (int i = 0; i < Count - 1; i++)
+                {
+                    if (i >= indexFound)
+                    {
+                        temp[i] = items[i + 1];
+                    }
+                    else
+                    {
+                        temp[i] = items[i];
+                    }
+                }
+                items = temp;
+                count--;
+                removed = true;
+            }
+            return removed;
         }
 
         public static GenericList<T> operator +(GenericList<T> listOne, GenericList<T> listTwo)
@@ -241,7 +279,6 @@ namespace GenericList
             {
                 newList = MakeCopy(this);
             }
-
             return newList;
         }
 
@@ -265,7 +302,6 @@ namespace GenericList
             {
                 myCopy.Add(list[i]);
             }
-
             return myCopy;
         }
 
@@ -276,13 +312,13 @@ namespace GenericList
                 return;
             }
 
-            if (this[0].GetType().Equals(1.GetType()))
+            if (this[0] is int)
             {
                 for (int i = 0; i < Count - 1; i++)
                 {
                     for (int j = i + 1; j < Count; j++)
-                    {                        
-                        if ( (int) (object) items[j] < (int)(object) items[i])
+                    {
+                        if ((int)(object)items[j] < (int)(object)items[i])
                         {
                             T temp = items[i];
                             items[i] = items[j];
@@ -290,9 +326,8 @@ namespace GenericList
                         }
                     }
                 }
-
             }
-            else if (this[0].GetType().Equals("".GetType()))
+            else if (this[0] is string)
             {
                 for (int i = 0; i < Count - 1; i++)
                 {
@@ -339,20 +374,17 @@ namespace GenericList
                     indexFound = i;
                     break;
                 }
-
             }
-
             return indexFound;
         }
 
         public void AddRange(IEnumerable<T> items)
         {
-            foreach(T item in items)
+            foreach (T item in items)
             {
                 this.Add(item);
             }
         }
-
 
         public void Reverse()
         {
@@ -363,5 +395,102 @@ namespace GenericList
                 items[Count - (i + 1)] = temp;
             }
         }
+
+        //returns Inumerator without inheriting the interface.
+
+        //public IEnumerator<T> Loop()
+        //{
+        //    for(int i = 0; i < Count; i++)
+        //    {
+        //        yield return items[i];
+        //    }
+        //}
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator1();
+        }
+        private IEnumerator GetEnumerator1()
+        {
+            return this.GetEnumerator();
+        }
+
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return new ListEnumerator<T>(items, count);
+        }
+
+        class ListEnumerator<T> : IEnumerator<T>
+        {
+            T[] items;
+            int position = -1;
+            int count;
+
+            public ListEnumerator(T[] items, int count)
+            {
+                this.items = items;
+                this.count = count;
+            }
+
+            public bool MoveNext()
+            {
+                position++;
+                return (position < count);
+            }
+
+            public void Reset()
+            {
+                position = -1;
+            }
+
+            T IEnumerator<T>.Current
+            {
+                get
+                {
+                    return Current;
+                }
+
+            }
+
+            public T Current
+            {
+                get
+                {
+                    try
+                    {
+                        return items[position];
+                    }
+                    catch (IndexOutOfRangeException)
+                    {
+                        throw new InvalidOperationException();
+                    }
+                }
+            }
+
+            private object Current1
+            {
+                get
+                {
+                    return this.Current;
+                }
+            }
+
+            object IEnumerator.Current
+            {
+                get { return Current1; }
+            }
+
+            public void Dispose()
+            {
+
+            }
+
+
+
+
+        }
+
+
     }
 }
