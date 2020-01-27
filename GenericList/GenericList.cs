@@ -416,6 +416,38 @@ namespace GenericList
 
         }
 
+        public T[] CopyTo(T[] array, int arrayIndex)
+        {
+            for(int i = 0; i < Count; i++)
+            {
+                array[arrayIndex] = items[i];
+                arrayIndex++;
+            }
+            return array;
+        }
+
+        public T[] CopyTo(int index, T[] array, int arrayIndex, int count)
+        {
+           
+            for (int i = index; i < count; i++)
+            {
+                array[arrayIndex] = items[i];
+                arrayIndex++;
+            }
+            return array;
+        }
+
+
+        public T[] CopyTo(T[] array)
+        {
+            for (int i = 0; i < Count; i++)
+            {
+                array[i] = items[i];
+            }
+            return array;
+        }
+
+
 
         public IEnumerator GetEnumerator()
         {

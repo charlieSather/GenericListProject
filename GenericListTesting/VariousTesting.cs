@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using GenericList;
+using System.Text;
 
 namespace GenericListTesting
 {
@@ -146,6 +147,80 @@ namespace GenericListTesting
             GenericList<int> result = myList.GetRange(1);
 
             Assert.AreEqual("23456", result.ToString());
+        }
+
+
+        [TestMethod]
+        public void TestCopyTo()
+        {
+            GenericList<int> myList = new GenericList<int> { 1, 2, 3, 4, 5, 6 };
+
+            int[] result = new int[6];
+
+            myList.CopyTo(result);
+
+            StringBuilder sb = new StringBuilder();
+            foreach(int i in result)
+            {
+                sb.Append(i.ToString());
+            }
+
+            Assert.AreEqual("123456", sb.ToString());
+        }
+
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        [TestMethod]
+        public void TestCopyToArraySizeTooSmallToContainTooSmall()
+        {
+            GenericList<int> myList = new GenericList<int> { 1, 2, 3, 4, 5, 6 };
+
+            int[] result = new int[4];
+
+            myList.CopyTo(result);
+
+            StringBuilder sb = new StringBuilder();
+            foreach (int i in result)
+            {
+                sb.Append(i.ToString());
+            }
+
+            Assert.AreEqual("123456", sb.ToString());
+        }
+
+        [TestMethod]
+        public void TestCopyToArrayIndex()
+        {
+            GenericList<int> myList = new GenericList<int> { 1, 2, 3, 4, 5, 6 };
+
+            int[] result = new int[9];
+
+            myList.CopyTo(result, 3);
+
+            StringBuilder sb = new StringBuilder();
+            foreach (int i in result)
+            {
+                sb.Append(i.ToString());
+            }
+
+            Assert.AreEqual("000123456", sb.ToString());
+        }
+
+        [TestMethod]
+        public void TestCopyToArrayWithListStartIndexAndArrayStartIndex()
+        {
+            GenericList<int> myList = new GenericList<int> { 1, 2, 3, 4, 5, 6 };
+
+            int[] result = new int[9];
+
+            myList.CopyTo(0,result, 2 , 4);
+
+            StringBuilder sb = new StringBuilder();
+            foreach (int i in result)
+            {
+                sb.Append(i.ToString());
+            }
+
+            Assert.AreEqual("001234000", sb.ToString());
         }
 
 
