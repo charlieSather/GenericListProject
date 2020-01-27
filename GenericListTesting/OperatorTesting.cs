@@ -48,6 +48,17 @@ namespace GenericListTesting
             Assert.AreEqual(2, concatList[1]);
         }
         [TestMethod]
+        public void ConcatenateListAreEqual()
+        {
+            GenericList<int> listOne = new GenericList<int> { 1, 2, 3 };
+            GenericList<int> listTwo = new GenericList<int> { 4, 5, 6 };
+
+            GenericList<int> result = listOne + listTwo;
+            Assert.AreEqual("123456", result.ToString());
+
+        }
+
+        [TestMethod]
         public void ConcatenateListCountProperlyUpdated()
         {
             GenericList<int> myList = new GenericList<int>();
@@ -117,6 +128,26 @@ namespace GenericListTesting
 
             Assert.AreEqual(2, result[0]);
         }
+        [TestMethod]
+        public void RemoveOperatorLeavesFirstListUnmodified()
+        {
+            GenericList<int> myList = new GenericList<int>();
+            GenericList<int> myListTwo = new GenericList<int>();
+
+            myList.Add(1);
+            myList.Add(2);
+            myList.Add(3);
+
+            myListTwo.Add(1);
+            myListTwo.Add(3);
+            myListTwo.Add(5);
+
+            GenericList<int> result = myList - myListTwo;
+
+            Assert.AreEqual("123", myList.ToString());
+        }
+
+
 
         [TestMethod]
         public void TestRemoveOperatorRemovesDuplicates()

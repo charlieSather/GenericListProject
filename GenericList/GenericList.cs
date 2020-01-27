@@ -251,50 +251,35 @@ namespace GenericList
                 }
             }
             return newList;
-
         }
 
         public GenericList<T> Zip(GenericList<T> list)
         {
             GenericList<T> newList = new GenericList<T>();
 
-            if (list.Count > 0)
+            if (Count < list.Count)
             {
-                if (Count < list.Count)
+                for (int i = 0; i < list.Count; i++)
                 {
-                    for (int i = 0; i < list.Count; i++)
-                    {
-                        if (i < Count)
-                        {
-                            newList.Add(this[i]);
-                        }
-                        newList.Add(list[i]);
-                    }
-                }
-                else if (Count > list.Count)
-                {
-                    for (int i = 0; i < Count; i++)
+                    if (i < Count)
                     {
                         newList.Add(this[i]);
-                        if (i < list.Count)
-                        {
-                            newList.Add(list[i]);
-                        }
                     }
-                }
-                else
-                {
-                    for (int i = 0; i < Count; i++)
-                    {
-                        newList.Add(this[i]);
-                        newList.Add(list[i]);
-                    }
+                    newList.Add(list[i]);
                 }
             }
             else
             {
-                newList = MakeCopy(this);
+                for (int i = 0; i < Count; i++)
+                {
+                    newList.Add(this[i]);
+                    if (i < list.Count)
+                    {
+                        newList.Add(list[i]);
+                    }
+                }
             }
+
             return newList;
         }
 
@@ -403,7 +388,6 @@ namespace GenericList
                     j++;
                 }
             }
-
         }
 
         public int Compare(T itemOne, T itemTwo)
