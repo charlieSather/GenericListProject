@@ -40,7 +40,7 @@ namespace GenericList
             listTwo.Add(3);
             listTwo.Add(4);
 
-            listOne.QuickSort();
+            listOne.Sort();
 
             List<string> strings = new List<string> { "Charlie", "Dave", "David", "Chris", "Trevor", "Adam" };
             strings.Sort();
@@ -121,6 +121,7 @@ namespace GenericList
             newList.QuickSort();
 
             GenericList<char> newLists = new GenericList<char> {'n','m','a','b','p','k'};
+            newLists.Sort();
             newLists.QuickSort();
 
             Console.ReadLine();
