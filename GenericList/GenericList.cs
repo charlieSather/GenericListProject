@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GenericList
 {
-    public class GenericList<T> : IEnumerable<T>
+    public class GenericList<T> : IEnumerable
     {
         static T[] _items;
 
@@ -96,56 +96,6 @@ namespace GenericList
             count++;
         }
 
-        public bool RemoveOne(T item)
-        {
-            //if T not same as GenericList<T> throw Exception immediately
-            bool removedItem = false;
-
-            if (Count < 1)
-            {
-                return removedItem;
-            }
-
-            for (int i = 0; i < Count; i++)
-            {
-                //Equals() fails on most reference types, users need to override Equals() method accordingly or use a workaround 
-                if (items[i].Equals(item))
-                {
-                    if (i != Count - 1)
-                    {
-                        T[] newList = new T[Capacity];
-
-                        for (int j = 0; j < Count - 1; j++)
-                        {
-                            if (j >= i)
-                            {
-                                newList[j] = items[j + 1];
-                            }
-                            else
-                            {
-                                newList[j] = items[j];
-                            }
-                        }
-                        items = newList;
-                        count--;
-                    }
-                    else
-                    {
-                        T[] newList = new T[Capacity];
-
-                        for (int j = 0; j < Count - 1; j++)
-                        {
-                            newList[j] = items[j];
-                        }
-                        items = newList;
-                        count--;
-                    }
-                    removedItem = true;
-                    break;
-                }
-            }
-            return removedItem;
-        }
         public bool Remove(T item)
         {
             bool removedItem = false;
@@ -179,41 +129,6 @@ namespace GenericList
             }
             count--;
             return newArray;
-        }
-
-
-        public bool RemoveTwo(T item)
-        {
-            int indexFound = -1;
-            bool removed = false;
-            for (int i = 0; i < Count; i++)
-            {
-                if (items[i].Equals(item))
-                {
-                    indexFound = i;
-                    break;
-                }
-            }
-            if (indexFound >= 0)
-            {
-                T[] temp = new T[Capacity];
-
-                for (int i = 0; i < Count - 1; i++)
-                {
-                    if (i >= indexFound)
-                    {
-                        temp[i] = items[i + 1];
-                    }
-                    else
-                    {
-                        temp[i] = items[i];
-                    }
-                }
-                items = temp;
-                count--;
-                removed = true;
-            }
-            return removed;
         }
 
         public static GenericList<T> operator +(GenericList<T> listOne, GenericList<T> listTwo)
@@ -458,93 +373,11 @@ namespace GenericList
             }
         }
 
-        //returns IEnumerator without inheriting the interface.
-
-        //public IEnumerator GetEnumerator()
-        //{
-        //    for(int i = 0; i < Count; i++)
-        //    {
-        //        yield return items[i];
-        //    }
-        //}
-
-        IEnumerator IEnumerable.GetEnumerator()
+        public IEnumerator GetEnumerator()
         {
-            return GetEnumerator1();
-        }
-        private IEnumerator GetEnumerator1()
-        {
-            return this.GetEnumerator();
-        }
-
-
-        public IEnumerator<T> GetEnumerator()
-        {
-            return new ListEnumerator<T>(items, count);
-        }
-
-        class ListEnumerator<T> : IEnumerator<T>
-        {
-            T[] items;
-            int position = -1;
-            int count;
-
-            public ListEnumerator(T[] items, int count)
+            for (int i = 0; i < Count; i++)
             {
-                this.items = items;
-                this.count = count;
-            }
-
-            public bool MoveNext()
-            {
-                position++;
-                return (position < count);
-            }
-
-            public void Reset()
-            {
-                position = -1;
-            }
-
-            T IEnumerator<T>.Current
-            {
-                get
-                {
-                    return Current;
-                }
-            }
-
-            public T Current
-            {
-                get
-                {
-                    try
-                    {
-                        return items[position];
-                    }
-                    catch (IndexOutOfRangeException)
-                    {
-                        throw new InvalidOperationException();
-                    }
-                }
-            }
-
-            private object Current1
-            {
-                get
-                {
-                    return this.Current;
-                }
-            }
-
-            object IEnumerator.Current
-            {
-                get { return Current1; }
-            }
-
-            public void Dispose()
-            {
-
+                yield return items[i];
             }
         }
     }
