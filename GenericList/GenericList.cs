@@ -373,6 +373,24 @@ namespace GenericList
             }
         }
 
+        public void RemoveRange(int index, int count)
+        {
+            int i = index;
+            while(i < Count && count > 0)
+            {
+                this.Remove(items[i]);
+                count--;
+            }
+        }
+
+        public void Clear()
+        {
+            count = 0;
+            Capacity = 4;
+            items = new T[Capacity];
+        }
+
+
         public IEnumerator GetEnumerator()
         {
             for (int i = 0; i < Count; i++)
