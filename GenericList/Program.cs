@@ -10,13 +10,10 @@ namespace GenericList
     {
         static void Main(string[] args)
         {
-          
-            List<int> ints = new List<int> { 1, 2, 3, 4, 5 };
-            int[] toArr = ints.ToArray();
 
-            GenericList<int> myList = new GenericList<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+            GenericList<int> myList = new GenericList<int> { 10, 15, 5, 8, 2, 3, 11, 9, 1, 0, 1 };
 
-            myList.TrimExcess();
+            myList.Sort(2, 10, Comparer<int>.Default);
 
             Console.WriteLine();
 

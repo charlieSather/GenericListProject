@@ -743,6 +743,96 @@ namespace GenericListTesting
         }
 
 
+        [TestMethod]
+        public void Sort_ComparisonPredicateByPersonObject()
+        {
+            GenericList<Person> myList = new GenericList<Person>
+            {
+                new Person("Charlie", 20),
+                new Person("Dave", 20),
+                new Person("Greg", 20),
+                new Person("Steven", 20),
+            };
+
+            myList.Sort(delegate (Person first, Person second)
+            {
+                return first.name.CompareTo(second.name);
+            });
+
+            Assert.AreEqual("(Charlie,20)(Dave,20)(Greg,20)(Steven,20)", myList.ToString());
+        }
+
+
+        [TestMethod]
+        public void Sort_ComparisonPredicateByints()
+        {
+            GenericList<int> myList = new GenericList<int> { 10, 15, 5, 8, 2, 3, 11, 9, 1, 0, 1 };
+           
+
+            myList.Sort(delegate (int first, int second)
+            {
+                return first.CompareTo(second);
+            });
+
+            Assert.AreEqual("01123589101115", myList.ToString());
+        }
+
+        [ExpectedException(typeof(ArgumentException))]
+        [TestMethod]
+        public void Sort_InvalidRangeSpecified()
+        {
+            GenericList<int> myList = new GenericList<int> { 10, 15, 5, 8, 2, 3, 11, 9, 1, 0, 1 };
+
+
+            myList.Sort(2, 10, Comparer<int>.Default);
+
+        }
+
+        [TestMethod]
+        public void Sort_RangeSpecifiedIntDefaultComparer()
+        {
+            GenericList<int> myList = new GenericList<int> { 10, 15, 5, 8, 2, 3, 11, 9, 1, 0, 1 };
+
+            myList.Sort(2, 9, Comparer<int>.Default);
+            Assert.AreEqual("10150112358911", myList.ToString());
+        }
+
+
+        [TestMethod]
+        public void Sort_RangeSpecifiedStringDefaultComparer()
+        {
+            GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie", "Steve", "Carl" };
+
+            myList.Sort(2, 4, Comparer<string>.Default);
+            Assert.AreEqual("AdamSteveCarlCharlieDaveSteve", myList.ToString());
+        }
+
+        [TestMethod]
+        public void Sort_RangeSpecifiedPersonDefinedComparer()
+        {
+            GenericList<Person> myList = new GenericList<Person>
+            {
+                new Person("Charlie", 20),
+                new Person("Dave", 22),
+                new Person("Greg", 23),
+                new Person("Steven", 21),
+                new Person("Charlie", 15)
+            };
+
+            myList.Sort(0,myList.Count, Comparer<Person>.Create(delegate(Person first, Person second)
+            {
+                if(first.name.CompareTo(second.name) == 0)
+                {
+                    return first.age.CompareTo(second.age);
+                }
+                else
+                {
+                    return first.name.CompareTo(second.name);
+                }
+            }));
+
+            Assert.AreEqual("(Charlie,15)(Charlie,20)(Dave,22)(Greg,23)(Steven,21)", myList.ToString());
+        }
 
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,7 +25,6 @@ namespace GenericList
             {
                 return capacity;
             }
-
             set
             {
                 if (value < Count)
@@ -37,6 +37,7 @@ namespace GenericList
                 }
             }
         }
+
         public GenericList()
         {
             items = new T[0];
@@ -231,11 +232,6 @@ namespace GenericList
 
         public void QuickSort()
         {
-            if (Count < 1)
-            {
-                return;
-            }
-
             for (int i = 0; i < Count - 1; i++)
             {
                 for (int j = i + 1; j < Count; j++)
@@ -255,6 +251,52 @@ namespace GenericList
             MergeSort(items, 0, Count - 1);
 
         }
+        public void Sort(Comparison<T> comparison)
+        {
+            if (comparison is null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            for (int i = 0; i < Count - 1; i++)
+            {
+                for (int j = i + 1; j < Count; j++)
+                {
+                    if (comparison(items[j], items[i]) < 0)
+                    {
+                        T temp = items[i];
+                        items[i] = items[j];
+                        items[j] = temp;
+                    }
+                }
+            }
+        }
+
+        public void Sort(int index, int count, IComparer<T> comparer)
+        {
+            if (index >= Count)
+            {
+                throw new IndexOutOfRangeException();
+            }
+            else if (index + count > Count)
+            {
+                throw new ArgumentException();
+            }
+
+            for (int i = index; i < index + count - 1; i++)
+            {
+                for (int j = i + 1; j < index + count; j++)
+                {
+                    if (comparer.Compare(items[j], items[i]) < 0)
+                    {
+                        T temp = items[i];
+                        items[i] = items[j];
+                        items[j] = temp;
+                    }
+                }
+            }
+        }
+
         public void MergeSort(T[] arr, int leftIndex, int rightIndex)
         {
             if (leftIndex < rightIndex)
@@ -810,7 +852,7 @@ namespace GenericList
         //the TrimExcess method does nothing if the list is at more than 90 percent of capacity.
         public void TrimExcess()
         {
-            if (((double) Count / (double)Capacity) < 0.9)
+            if (((double)Count / (double)Capacity) < 0.9)
             {
                 items = ToArray();
                 capacity = Count;
@@ -818,12 +860,12 @@ namespace GenericList
         }
         public bool TrueForAll(Predicate<T> match)
         {
-            if(match is null)
+            if (match is null)
             {
                 throw new ArgumentNullException();
             }
 
-            foreach(T item in this)
+            foreach (T item in this)
             {
                 if (!match(item))
                 {
@@ -832,8 +874,6 @@ namespace GenericList
             }
             return true;
         }
-
-
 
         public IEnumerator GetEnumerator()
         {

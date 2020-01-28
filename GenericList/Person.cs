@@ -36,6 +36,11 @@ namespace GenericList
             }
         }
 
+        public override string ToString()
+        {
+            return $"({name},{age})";
+        }
+
 
     }
 }
