@@ -518,5 +518,77 @@ namespace GenericListTesting
             myList.FindLastIndex(0,10, x => x == "Greg");
         }
 
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        [TestMethod]
+        public void Insert_IndexOutOfRange_ThrowException()
+        {
+            GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie", "Steve", "Carl" };
+
+            myList.Insert(-1,"Jeff");
+        }
+
+        [TestMethod]
+        public void Insert_TestInsertAtBeginning()
+        {
+            GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie", "Steve", "Carl" };
+
+            myList.Insert(0, "Jeff");
+            Assert.AreEqual("Jeff", myList[0]);
+        }
+
+        [TestMethod]
+        public void Insert_InsertIntoEmptyList()
+        {
+            GenericList<string> myList = new GenericList<string>();
+
+            myList.Insert(0, "Jeff");
+            Assert.AreEqual("Jeff", myList[0]);
+        }
+
+        [TestMethod]
+        public void Insert_IndexEqualsListCount()
+        {
+            GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie", "Steve", "Carl" };
+
+            myList.Insert(6, "Jeff");
+            Assert.AreEqual("Jeff", myList[6]);
+        }
+
+        [TestMethod]
+        public void Insert_CountUpdatedAfterSuccessfulInsert()
+        {
+            GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie", "Steve", "Carl" };
+
+            myList.Insert(4, "Jeff");
+            Assert.AreEqual(7, myList.Count);
+        }
+
+        [TestMethod]
+        public void Insert_CapacityIsEqualToList()
+        {
+            GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie" };
+
+            myList.Insert(2, "Jeff");
+            Assert.AreEqual(8, myList.Capacity);
+        }
+
+        [TestMethod]
+        public void Insert_InsertItemIntoNonEmptyList()
+        {
+            GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie", "Steve", "Carl" };
+
+            myList.Insert(3, "Jeff");
+            Assert.AreEqual("Jeff", myList[3]);
+        }
+
+        [TestMethod]
+        public void Insert_AfterSuccessfuInsert_ListShiftsRight()
+        {
+            GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie", "Steve", "Carl" };
+
+            myList.Insert(2,"Jeff");
+            Assert.AreEqual("AdamSteveJeffDaveCharlieSteveCarl", myList.ToString());
+        }
+
     }
 }

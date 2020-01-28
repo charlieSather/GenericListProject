@@ -699,7 +699,39 @@ namespace GenericList
             }
             return last;
         }
-        
+
+        public void Insert(int index, T item)
+        {
+            if (index > Count || index < 0)
+            {
+                throw new IndexOutOfRangeException();
+            }
+            else if (index == Count)
+            {
+                Add(item);
+                return;
+            }
+            else if (Count == Capacity)
+            {
+                capacity *= 2;
+            }
+
+            int counter = 0;
+            T[] newArray = new T[Capacity];
+            for (int i = 0; i < Count; i++)
+            {
+                if (i == index)
+                {
+                    newArray[counter] = item;
+                    counter++;
+                }
+                newArray[counter] = items[i];
+                counter++;
+            }
+            count++;
+            items = newArray;
+        }
+
         public IEnumerator GetEnumerator()
         {
             for (int i = 0; i < Count; i++)
