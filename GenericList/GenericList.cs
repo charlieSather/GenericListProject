@@ -170,6 +170,20 @@ namespace GenericList
 
         //public static GenericList<T> operator -(GenericList<T> listOne, GenericList<T> listTwo)
         //{
+        //    GenericList<T> newList = new GenericList<T>();
+
+        //    foreach (T item in listOne)
+        //    {
+        //        if (!listTwo.Contains(item))
+        //        {
+        //            newList.Add(item);
+        //        }
+        //    }
+        //    return newList;
+        //}
+
+        //public static GenericList<T> operator -(GenericList<T> listOne, GenericList<T> listTwo)
+        //{
         //    GenericList<T> newList = MakeCopy(listOne);
 
         //    foreach(T item in listTwo)
@@ -399,7 +413,7 @@ namespace GenericList
             return -1;
         }
 
-        public void AddRange(IEnumerable<T> items)
+        public void AddRange(IEnumerable items)
         {
             foreach (T item in items)
             {
@@ -663,7 +677,7 @@ namespace GenericList
 
         public int FindLastIndex(int startIndex, Predicate<T> match)
         {
-            if(startIndex >= Count)
+            if (startIndex >= Count)
             {
                 throw new IndexOutOfRangeException();
             }
@@ -730,6 +744,31 @@ namespace GenericList
             }
             count++;
             items = newArray;
+        }
+
+        //TODO
+        //Go back and refactor this without using Insert() Method
+        public void InsertRange(int index, IEnumerable collection)
+        {
+            if (index > Count || index < 0)
+            {
+                throw new IndexOutOfRangeException();
+            }
+            else if(collection is null)
+            {
+                throw new ArgumentNullException();
+            }
+            else if (index == Count)
+            {
+                AddRange(collection);
+                return;
+            }
+           
+            foreach(T item in collection)
+            {
+                Insert(index, item);
+                index++;
+            }
         }
 
         public IEnumerator GetEnumerator()

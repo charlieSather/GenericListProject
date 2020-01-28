@@ -58,7 +58,7 @@ namespace GenericListTesting
 
             Assert.AreEqual(-1, myList.IndexOf(10));
         }
-        
+
         [TestMethod]
         public void IndexOf_ListDoesNotHaveItemFromIndex()
         {
@@ -66,7 +66,7 @@ namespace GenericListTesting
 
             myList.AddRange(new List<int> { 1, 2, 3, 4, 5, 6 });
 
-            Assert.AreEqual(-1, myList.IndexOf(10,2));
+            Assert.AreEqual(-1, myList.IndexOf(10, 2));
         }
 
         [TestMethod]
@@ -383,7 +383,7 @@ namespace GenericListTesting
 
             Assert.AreEqual(3, myList.FindIndex(3, 10, x => x == 12));
         }
-        
+
         [TestMethod]
         public void ForEach_TestStringToUpperAction_AllListItemsToUpper()
         {
@@ -422,7 +422,7 @@ namespace GenericListTesting
         [TestMethod]
         public void TestConvertAllStringToInt()
         {
-            GenericList<string> strList = new GenericList<string> { "1","2", "3", "4", "5", "6" };
+            GenericList<string> strList = new GenericList<string> { "1", "2", "3", "4", "5", "6" };
 
             GenericList<int> intList = strList.ConvertAll(new Converter<string, int>(x => Int32.Parse(x)));
 
@@ -448,7 +448,7 @@ namespace GenericListTesting
         [TestMethod]
         public void FindLast_ListHasMultipleItemsThatMeetMatchPredicate_ReturnsLastMatch()
         {
-            GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie","Steve", "Carl" };
+            GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie", "Steve", "Carl" };
 
             Assert.AreEqual("Steve", myList.FindLast(x => x == "Steve"));
         }
@@ -515,7 +515,7 @@ namespace GenericListTesting
         {
             GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie", "Steve", "Carl" };
 
-            myList.FindLastIndex(0,10, x => x == "Greg");
+            myList.FindLastIndex(0, 10, x => x == "Greg");
         }
 
         [ExpectedException(typeof(IndexOutOfRangeException))]
@@ -524,7 +524,7 @@ namespace GenericListTesting
         {
             GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie", "Steve", "Carl" };
 
-            myList.Insert(-1,"Jeff");
+            myList.Insert(-1, "Jeff");
         }
 
         [TestMethod]
@@ -586,8 +586,44 @@ namespace GenericListTesting
         {
             GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie", "Steve", "Carl" };
 
-            myList.Insert(2,"Jeff");
+            myList.Insert(2, "Jeff");
             Assert.AreEqual("AdamSteveJeffDaveCharlieSteveCarl", myList.ToString());
+        }
+
+        [TestMethod]
+        public void InsertRange_InsertCollectionAtIndexZero()
+        {
+            GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave" };
+
+            myList.InsertRange(0, new GenericList<string> { "Jeff", "Greg", "Steve" });
+            Assert.AreEqual("JeffGregSteveAdamSteveDave", myList.ToString());
+        }
+
+        [TestMethod]
+        public void InsertRange_InsertCollectionAtIndexEqualCount()
+        {
+            GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave" };
+
+            myList.InsertRange(3, new GenericList<string> { "Jeff", "Greg", "Steve" });
+            Assert.AreEqual("AdamSteveDaveJeffGregSteve", myList.ToString());
+        }
+
+        [ExpectedException(typeof(ArgumentNullException))]
+        [TestMethod]
+        public void InsertRange_InsertNullCollection_ThrowArgumentNullException()
+        {
+            GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave" };
+
+            myList.InsertRange(2, null);
+        }
+
+        [TestMethod]
+        public void InsertRange_InsertCollectionIntoMiddleOfList()
+        {
+            GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave","Chris" };
+
+            myList.InsertRange(2, new GenericList<string> { "Jeff", "Greg", "Steve" });
+            Assert.AreEqual("AdamSteveJeffGregSteveDaveChris", myList.ToString());
         }
 
     }

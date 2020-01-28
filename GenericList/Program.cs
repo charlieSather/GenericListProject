@@ -14,6 +14,14 @@ namespace GenericList
 
             myList.Insert(2, "Jeff");
 
+            myList.AddRange(new List<string> { "dave", "charlie" });
+
+            myList.AddRange(new GenericList<string> { "steve", "adam" });
+
+            Console.WriteLine(myList.ToString());
+
+
+
             Console.ReadLine();
 
 
