@@ -1,0 +1,39 @@
+DETAILS
+Returns a new GenericList<T> containing listOne's contents and all occurences of listTwo's items in listOne removed.
+
+METHOD SIGNATURE
+public static GenericList<T> operator -(GenericList<T> listOne, GenericList<T> listTwo)
+
+PARAMETERS
+
+listOne GenericList<T>
+
+listTwo GenericList<T>
+
+RETURNS
+GenericList<T>
+This method returns a new instance of GenericList<T> containing any modificatons to listOne.
+
+EXAMPLES
+
+public static void main(string[] args)
+{	
+
+	GenericList<int> listOne = new GenericList<int> { 2, 10, 7, 5, 1 };
+	GenericList<int> listTwo = new GenericList<int> { 2, 3, 4 };
+	
+	GenericList<int> list = listOne - listTwo;
+	
+	// list is a new GenericList<int> with values { 10, 7, 5, 1 }
+	
+
+	
+	GenericList<int> listOne = new GenericList<int> { 5, 2, 2, 2, 1 };
+	GenericList<int> listTwo = new GenericList<int> { 5, 3, 2 };
+	
+	GenericList<int> list = listOne - listTwo;
+	// list is a new GenericList<int> with values { 1 }	
+
+}
+
+

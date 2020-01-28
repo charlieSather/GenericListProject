@@ -10,12 +10,11 @@ namespace GenericListTesting
     public class VariousTesting
     {
         [TestMethod]
-        public void TestListContainsItem()
+        public void Contains_TestListContainsItem()
         {
             GenericList<int> myList = new GenericList<int>();
 
             myList.AddRange(new List<int> { 1, 2, 3, 4, 5, 6 });
-
             Assert.AreEqual(true, myList.Contains(2));
         }
 
@@ -118,7 +117,7 @@ namespace GenericListTesting
         }
 
         [TestMethod]
-        public void TestReversList()
+        public void Reverse_TestReversList()
         {
             GenericList<int> myList = new GenericList<int>();
 
@@ -129,7 +128,7 @@ namespace GenericListTesting
         }
 
         [TestMethod]
-        public void TestReversListStringEqual()
+        public void Reverse_TestReversListStringEqual()
         {
             GenericList<int> myList = new GenericList<int>();
 
@@ -140,7 +139,7 @@ namespace GenericListTesting
         }
 
         [TestMethod]
-        public void TestRemoveRangeFourItems()
+        public void RemoveRange_TestRemoveRangeFourItems()
         {
             GenericList<int> myList = new GenericList<int>();
 
@@ -151,7 +150,7 @@ namespace GenericListTesting
         }
 
         [TestMethod]
-        public void TestRemoveRangeAllItems()
+        public void RemoveRange_TestRemoveRangeAllItems()
         {
             GenericList<int> myList = new GenericList<int>();
 
@@ -162,7 +161,7 @@ namespace GenericListTesting
         }
 
         [TestMethod]
-        public void TestRemoveRangeExceedsListCount()
+        public void RemoveRange_TestRemoveRangeExceedsListCount()
         {
             GenericList<int> myList = new GenericList<int>();
 
@@ -173,7 +172,7 @@ namespace GenericListTesting
         }
 
         [TestMethod]
-        public void TestGetRangeThreeItems()
+        public void GetRange_TestGetRangeThreeItems()
         {
             GenericList<int> myList = new GenericList<int>();
 
@@ -185,7 +184,7 @@ namespace GenericListTesting
         }
 
         [TestMethod]
-        public void TestGetRangeCountExceedsListCount()
+        public void GetRange_TestGetRangeCountExceedsListCount()
         {
             GenericList<int> myList = new GenericList<int>();
 
@@ -197,7 +196,7 @@ namespace GenericListTesting
 
 
         [TestMethod]
-        public void TestGetRangeStartingIndex()
+        public void GetRange_TestGetRangeStartingIndex()
         {
             GenericList<int> myList = new GenericList<int>();
 
@@ -209,7 +208,7 @@ namespace GenericListTesting
 
 
         [TestMethod]
-        public void TestCopyTo()
+        public void CopyTo_TestCopyTo()
         {
             GenericList<int> myList = new GenericList<int> { 1, 2, 3, 4, 5, 6 };
 
@@ -228,7 +227,7 @@ namespace GenericListTesting
 
         [ExpectedException(typeof(IndexOutOfRangeException))]
         [TestMethod]
-        public void TestCopyToArraySizeTooSmallToContainTooSmall()
+        public void CopyTo_TestCopyToArrayThatIsSmallerThanList()
         {
             GenericList<int> myList = new GenericList<int> { 1, 2, 3, 4, 5, 6 };
 
@@ -246,7 +245,7 @@ namespace GenericListTesting
         }
 
         [TestMethod]
-        public void TestCopyToArrayIndex()
+        public void CopyTo_TestCopyToArrayIndex()
         {
             GenericList<int> myList = new GenericList<int> { 1, 2, 3, 4, 5, 6 };
 
@@ -264,7 +263,7 @@ namespace GenericListTesting
         }
 
         [TestMethod]
-        public void TestCopyToArrayWithListStartIndexAndArrayStartIndex()
+        public void CopyTo_TestCopyToArrayWithListStartIndexAndArrayStartIndex()
         {
             GenericList<int> myList = new GenericList<int> { 1, 2, 3, 4, 5, 6 };
 
@@ -282,7 +281,7 @@ namespace GenericListTesting
         }
 
         [TestMethod]
-        public void TestExistsReturnsTrueIfItemMatchesPredicateConditions()
+        public void Exists_TestExistsReturnsTrueIfItemMatchesPredicateConditions()
         {
             GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie" };
 
@@ -290,7 +289,7 @@ namespace GenericListTesting
         }
 
         [TestMethod]
-        public void TestExistsReturnsFalseIfItemDoesNotMatchPredicateConditions()
+        public void Exists_TestExistsReturnsFalseIfItemDoesNotMatchPredicateConditions()
         {
             GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie" };
 
@@ -299,7 +298,7 @@ namespace GenericListTesting
 
         [ExpectedException(typeof(ArgumentNullException))]
         [TestMethod]
-        public void TestExistsThrowsArgumentNullExcecptionOnNullPredicate()
+        public void Exists_TestExistsThrowsArgumentNullExcecptionOnNullPredicate()
         {
             GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie" };
 
@@ -307,7 +306,7 @@ namespace GenericListTesting
         }
 
         [TestMethod]
-        public void TestFindindexOfString()
+        public void FindIndex_TestFindindexOfString()
         {
             GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie" };
 
@@ -316,7 +315,7 @@ namespace GenericListTesting
 
         [ExpectedException(typeof(ArgumentNullException))]
         [TestMethod]
-        public void TestFindindexNullPredicate()
+        public void FindIndex_TestFindindexNullPredicate()
         {
             GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie" };
 
@@ -324,7 +323,7 @@ namespace GenericListTesting
         }
 
         [TestMethod]
-        public void TestFindItemInList()
+        public void Find_TestFindItemInList()
         {
             GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie" };
 
@@ -332,7 +331,7 @@ namespace GenericListTesting
         }
 
         [TestMethod]
-        public void TestFindItemNotInList_DefaultValueIsExpected()
+        public void Find_TestFindItemNotInList_DefaultValueIsExpected()
         {
             GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie" };
 
@@ -340,7 +339,7 @@ namespace GenericListTesting
         }
 
         [TestMethod]
-        public void TestFindindexCantFindString_ExpectNegativeOne()
+        public void FindIndex_TestFindindexCantFindString_ExpectNegativeOne()
         {
             GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie" };
 
@@ -349,7 +348,7 @@ namespace GenericListTesting
         }
 
         [TestMethod]
-        public void TestFindindexFromStartIndex()
+        public void FindIndex_TestFindindexFromStartIndex()
         {
             GenericList<int> myList = new GenericList<int> { 1, 2, 3, 4, 5, 6 };
 
@@ -359,7 +358,7 @@ namespace GenericListTesting
 
 
         [TestMethod]
-        public void TestFindindexFromStartIndexFindsNothing()
+        public void FindIndex_TestFindindexFromStartIndexFindsNothing()
         {
             GenericList<int> myList = new GenericList<int> { 1, 2, 3, 4, 5, 6 };
 
@@ -368,7 +367,7 @@ namespace GenericListTesting
         }
 
         [TestMethod]
-        public void TestFindIndexFromStartIndexAndGivenCount()
+        public void FindIndex_TestFindIndexFromStartIndexAndGivenCount()
         {
             GenericList<int> myList = new GenericList<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
@@ -377,7 +376,7 @@ namespace GenericListTesting
 
         [ExpectedException(typeof(IndexOutOfRangeException))]
         [TestMethod]
-        public void TestFindIndexFromStartIndexCountIndexOutOfBounds()
+        public void FindIndex_TestFindIndexFromStartIndexCountIndexOutOfBounds()
         {
             GenericList<int> myList = new GenericList<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
@@ -410,7 +409,7 @@ namespace GenericListTesting
         }
 
         [TestMethod]
-        public void TestConvertAllIntToString()
+        public void ConvertAll_TestConvertAllIntToString()
         {
             GenericList<int> myList = new GenericList<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
@@ -420,7 +419,7 @@ namespace GenericListTesting
         }
 
         [TestMethod]
-        public void TestConvertAllStringToInt()
+        public void ConvertAll_TestConvertAllStringToInt()
         {
             GenericList<string> strList = new GenericList<string> { "1", "2", "3", "4", "5", "6" };
 

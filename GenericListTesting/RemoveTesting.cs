@@ -28,8 +28,7 @@ namespace GenericListTesting
         [TestMethod]
         public void Remove_RemoveItem_ReturnsTruesIfItemIsRemoved()
         {
-            GenericList<int> myList = new GenericList<int>();
-            myList.Add(1);     
+            GenericList<int> myList = new GenericList<int>{ 1 };
             Assert.AreEqual(true, myList.Remove(1));
         }
 

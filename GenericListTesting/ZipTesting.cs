@@ -8,88 +8,52 @@ namespace GenericListTesting
     public class ZipTesting
     {
         [TestMethod]
-        public void ZipSameSizeList()
+        public void Zip_SameSizeList()
         {
-            GenericList<int> odd = new GenericList<int>();
-            GenericList<int> even = new GenericList<int>();
-
-            odd.Add(1);
-            odd.Add(3);
-            odd.Add(5);
-
-            even.Add(2);
-            even.Add(4);
-            even.Add(6);
+            GenericList<int> odd = new GenericList<int> { 1, 3, 5 };
+            GenericList<int> even = new GenericList<int> { 2, 4, 6 };
 
             GenericList<int> result = odd.Zip(even);
-
             Assert.AreEqual(2, result[1]);
         }
 
         [TestMethod]
-        public void ZipSmallerList()
+        public void Zip_SmallerList()
         {
-            GenericList<int> odd = new GenericList<int>();
-            GenericList<int> even = new GenericList<int>();
-
-            odd.Add(1);
-            odd.Add(3);
-            odd.Add(5);
-
-            even.Add(2);
+            GenericList<int> odd = new GenericList<int> { 1, 3, 5 };
+            GenericList<int> even = new GenericList<int> { 2 };
 
             GenericList<int> result = odd.Zip(even);
-
             Assert.AreEqual(2, result[1]);
         }
 
         [TestMethod]
-        public void ZipLargerList()
+        public void Zip_LargerList()
         {
-            GenericList<int> odd = new GenericList<int>();
-            GenericList<int> even = new GenericList<int>();
-
-            odd.Add(1);
-            odd.Add(3);
-
-            even.Add(2);
-            even.Add(4);
-            even.Add(6);
+            GenericList<int> odd = new GenericList<int>() { 1, 3 };
+            GenericList<int> even = new GenericList<int> { 2, 4, 6 };
 
             GenericList<int> result = odd.Zip(even);
-
             Assert.AreEqual(4, result[3]);
         }
 
         [TestMethod]
-        public void ZipUpdatesCountCorrectly()
+        public void Zip_UpdatesCountCorrectly()
         {
-            GenericList<int> odd = new GenericList<int>();
-            GenericList<int> even = new GenericList<int>();
-
-            odd.Add(1);
-
-            even.Add(2);
-            even.Add(4);
-            even.Add(6);
+            GenericList<int> odd = new GenericList<int>() { 1 };
+            GenericList<int> even = new GenericList<int> { 2, 4, 6 };
 
             GenericList<int> result = odd.Zip(even);
-
             Assert.AreEqual(4, result.Count);
         }
 
         [TestMethod]
-        public void ZipEmptyList()
+        public void Zip_EmptyList()
         {
-            GenericList<int> odd = new GenericList<int>();
+            GenericList<int> odd = new GenericList<int>() { 1, 3, 5 };
             GenericList<int> even = new GenericList<int>();
 
-            odd.Add(1);
-            odd.Add(3);
-            odd.Add(5);          
-
             GenericList<int> result = odd.Zip(even);
-
             Assert.AreEqual(odd.Count, result.Count);
         }
     }
