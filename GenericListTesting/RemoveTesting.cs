@@ -17,12 +17,7 @@ namespace GenericListTesting
         [TestMethod]
         public void Remove_RemovingItemNotInList_ListRemainsUnchanged()
         {
-            GenericList<int> myList = new GenericList<int>();
-            myList.Add(1);
-            myList.Add(2);
-            myList.Add(3);
-            myList.Add(4);
-
+            GenericList<int> myList = new GenericList<int> { 1, 2, 3, 4 };
 
             myList.Remove(5);
             myList.Remove(0);
@@ -41,11 +36,8 @@ namespace GenericListTesting
         [TestMethod]
         public void Remove_CountIsDecremented_CountDecrementedAfterRemove()
         {
-            GenericList<int> myList = new GenericList<int>();
+            GenericList<int> myList = new GenericList<int> { 1, 2, 3 };
 
-            myList.Add(1);
-            myList.Add(2);
-            myList.Add(3);
             myList.Remove(2);
             Assert.AreEqual(2, myList.Count);
         }
@@ -53,28 +45,28 @@ namespace GenericListTesting
         [TestMethod]
         public void Remove_ListShiftsAfterRemove_ListShiftsAndRemainsInOrder()
         {
-            GenericList<int> myList = new GenericList<int>();
+            GenericList<int> myList = new GenericList<int> { 1, 2, 3 };
 
-            myList.Add(1);
-            myList.Add(2);
-            myList.Add(3);
             myList.Remove(2);
-
             Assert.AreEqual(3, myList[1]);
         }
 
         [TestMethod]
         public void Remove_ListRemovesOnlyFirstMatch_ListShiftsAndKeepsAnyDuplicatesLeft()
         {
-            GenericList<int> myList = new GenericList<int>();
+            GenericList<int> myList = new GenericList<int> { 1, 2, 3, 2 };
 
-            myList.Add(1);
-            myList.Add(2);
-            myList.Add(3);
-            myList.Add(2);
             myList.Remove(2);
-
             Assert.AreEqual(2, myList[2]);
+        }
+
+        [TestMethod]
+        public void Remove_ListRemovesFromEndOfList_()
+        {
+            GenericList<int> myList = new GenericList<int> { 1, 2, 3 };
+
+            myList.Remove(3);
+            Assert.AreEqual(2, myList[1]);
         }
 
     }

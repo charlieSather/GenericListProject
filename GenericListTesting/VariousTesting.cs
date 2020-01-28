@@ -625,6 +625,42 @@ namespace GenericListTesting
             myList.InsertRange(2, new GenericList<string> { "Jeff", "Greg", "Steve" });
             Assert.AreEqual("AdamSteveJeffGregSteveDaveChris", myList.ToString());
         }
+        
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [TestMethod]
+        public void RemoveAt_ZeroIndexEmptyArray()
+        {
+            GenericList<int> myList = new GenericList<int>();
+
+            myList.RemoveAt(0);
+        }
+
+        [TestMethod]
+        public void RemoveAt_EndOfList()
+        {
+            GenericList<int> myList = new GenericList<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+            myList.RemoveAt(myList.Count - 1);
+            Assert.AreEqual(8, myList[myList.Count - 1]);
+        }
+
+        [TestMethod]
+        public void RemoveAt_UpdatesCountProperly()
+        {
+            GenericList<int> myList = new GenericList<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+            myList.RemoveAt(3);
+            Assert.AreEqual(8, myList.Count);
+        }
+
+        [TestMethod]
+        public void RemoveAt_AfterSuccessfulRemovalListIsShifted()
+        {
+            GenericList<int> myList = new GenericList<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+            myList.RemoveAt(4);
+            Assert.AreEqual("12346789", myList.ToString());
+        }
 
     }
 }

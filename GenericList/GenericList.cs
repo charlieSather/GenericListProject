@@ -104,31 +104,13 @@ namespace GenericList
             {
                 if (items[i].Equals(item))
                 {
-                    items = RemoveIndex(i);
+                    RemoveAt(i);
                     removedItem = true;
                     break;
                 }
             }
             return removedItem;
 
-        }
-
-        private T[] RemoveIndex(int index)
-        {
-            T[] newArray = new T[Capacity];
-            int counter = 0;
-
-            for (int i = 0; i < Count; i++)
-            {
-                if (i == index)
-                {
-                    i++;
-                }
-                newArray[counter] = items[i];
-                counter++;
-            }
-            count--;
-            return newArray;
         }
 
         public static GenericList<T> operator +(GenericList<T> listOne, GenericList<T> listTwo)
@@ -769,6 +751,47 @@ namespace GenericList
                 Insert(index, item);
                 index++;
             }
+        }
+
+        public int RemoveAll(Predicate<T> match)
+        {
+            int removed = 0;
+            int i = 0;
+
+            while(i < Count)
+            {
+                if (match(this[i]))
+                {
+                    removed++;
+                    Remove(this[i]);
+                }
+                else
+                {
+                    i++;
+                }
+            }
+            return removed;            
+        }
+
+        public void RemoveAt(int index)
+        {
+            if (index >= Count || index < 0)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+            else if(index == Count - 1)
+            {
+                items[Count - 1] = default;
+            }
+
+            int counter = index;
+            for (int i = index + 1; i < Count; i++)
+            {
+                items[counter] = items[i];
+                counter++;
+            }
+            items[counter] = default;
+            count--;
         }
 
         public IEnumerator GetEnumerator()
