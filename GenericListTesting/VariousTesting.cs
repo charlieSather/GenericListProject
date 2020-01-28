@@ -325,6 +325,31 @@ namespace GenericListTesting
 
             Assert.AreEqual(3, myList.FindIndex(3, 10, x => x == 12));
         }
+        
+        [TestMethod]
+        public void ForEach_TestStringToUpperAction_AllListItemsToUpper()
+        {
+            GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie" };
+
+            StringBuilder sb = new StringBuilder();
+            myList.ForEach(x => sb.Append(x.ToUpper()));
+
+            Assert.AreEqual("ADAMSTEVEDAVECHARLIE", sb.ToString());
+        }
+
+        [TestMethod]
+        public void ForEach_CalculateSumOfAllListItem()
+        {
+            GenericList<int> myList = new GenericList<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+            int sum = 0;
+            myList.ForEach(delegate (int item)
+            {
+                sum += item;
+            });
+
+            Assert.AreEqual(45, sum);
+        }
 
         [TestMethod]
         public void TestConvertAllIntToString()

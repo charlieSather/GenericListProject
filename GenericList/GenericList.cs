@@ -541,6 +541,18 @@ namespace GenericList
             return index;
         }
 
+        public void ForEach(Action<T> action)
+        {
+            if(action is null)
+            {
+                throw new ArgumentNullException();
+            }
+            foreach(T item in this)
+            {
+                action(item);
+            }
+        }   
+
         public GenericList<K> ConvertAll<K>(Converter<T, K> converter)
         {
             GenericList<K> newList = new GenericList<K>();
@@ -550,7 +562,6 @@ namespace GenericList
             }
             return newList;
         }
-
 
         public IEnumerator GetEnumerator()
         {
