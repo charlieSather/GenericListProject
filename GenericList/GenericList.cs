@@ -447,9 +447,31 @@ namespace GenericList
             }
             return array;
         }
+        public T Find(Predicate<T> match)
+        {
+            if(match is null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            foreach(T item in this)
+            {
+                if (match(item))
+                {
+                    return item;                
+                }
+            }
+            return default;
+        }
+
 
         public int FindIndex(Predicate<T> match)
         {
+            if (match is null)
+            {
+                throw new ArgumentNullException();
+            }
+
             int index = -1;
             for(int i = 0; i < Count; i++)
             {
@@ -463,6 +485,11 @@ namespace GenericList
         }
         public int FindIndex(int startIndex, Predicate<T> match)
         {
+            if (match is null)
+            {
+                throw new ArgumentNullException();
+            }
+
             int index = -1;
             for (int i = startIndex; i < Count; i++)
             {
@@ -477,6 +504,11 @@ namespace GenericList
 
         public int FindIndex(int startIndex, int count, Predicate<T> match)
         {
+            if (match is null)
+            {
+                throw new ArgumentNullException();
+            }
+
             int index = -1;
             for (int i = startIndex; count > 0; i++)
             {

@@ -229,7 +229,31 @@ namespace GenericListTesting
             GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie" };
 
             Assert.AreEqual(3, myList.FindIndex(x => x == "Charlie"));
+        }
 
+        [ExpectedException(typeof(ArgumentNullException))]
+        [TestMethod]
+        public void TestFindindexNullPredicate()
+        {
+            GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie" };
+
+            Assert.AreEqual(3, myList.FindIndex(null));
+        }
+
+        [TestMethod]
+        public void TestFindItemInList()
+        {
+            GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie" };
+
+            Assert.AreEqual("Dave", myList.Find(x => x == "Dave"));
+        }
+
+        [TestMethod]
+        public void TestFindItemNotInList_DefaultValueIsExpected()
+        {
+            GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie" };
+
+            Assert.AreEqual(null, myList.Find(x => x == "Chris"));
         }
 
         [TestMethod]
@@ -298,12 +322,6 @@ namespace GenericListTesting
             Assert.AreEqual(Int32.Parse(strList[1]), intList[1]);
 
         }
-
-
-
-
-
-
 
     }
 }
