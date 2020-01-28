@@ -366,7 +366,7 @@ namespace GenericList
 
         public int IndexOf(T item, int index)
         {
-            if(index >= Count)
+            if (index >= Count)
             {
                 throw new IndexOutOfRangeException();
             }
@@ -633,7 +633,73 @@ namespace GenericList
             }
             return newList;
         }
+        public T FindLast(Predicate<T> match)
+        {
+            T last = default;
 
+            foreach (T item in this)
+            {
+                if (match(item))
+                {
+                    last = item;
+                }
+            }
+            return last;
+        }
+
+        public int FindLastIndex(Predicate<T> match)
+        {
+            int last = -1;
+
+            for (int i = 0; i < Count; i++)
+            {
+                if (match(items[i]))
+                {
+                    last = i;
+                }
+            }
+            return last;
+        }
+
+        public int FindLastIndex(int startIndex, Predicate<T> match)
+        {
+            if(startIndex >= Count)
+            {
+                throw new IndexOutOfRangeException();
+            }
+
+            int last = -1;
+
+            for (int i = startIndex; i < Count; i++)
+            {
+                if (match(items[i]))
+                {
+                    last = i;
+                }
+            }
+            return last;
+        }
+
+        public int FindLastIndex(int startIndex, int count, Predicate<T> match)
+        {
+            if (startIndex >= Count)
+            {
+                throw new IndexOutOfRangeException();
+            }
+
+            int last = -1;
+
+            for (int i = startIndex; count > 0; i++)
+            {
+                if (match(items[i]))
+                {
+                    last = i;
+                }
+                count--;
+            }
+            return last;
+        }
+        
         public IEnumerator GetEnumerator()
         {
             for (int i = 0; i < Count; i++)

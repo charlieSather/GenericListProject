@@ -417,7 +417,6 @@ namespace GenericListTesting
             GenericList<string> strList = myList.ConvertAll(new Converter<int, string>(x => x.ToString()));
 
             Assert.AreEqual(myList[1].ToString(), strList[1]);
-
         }
 
         [TestMethod]
@@ -428,7 +427,95 @@ namespace GenericListTesting
             GenericList<int> intList = strList.ConvertAll(new Converter<string, int>(x => Int32.Parse(x)));
 
             Assert.AreEqual(Int32.Parse(strList[1]), intList[1]);
+        }
 
+        [TestMethod]
+        public void FindLast_ListOnlyContainsOneItem_ReturnsItem()
+        {
+            GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie" };
+
+            Assert.AreEqual("Dave", myList.FindLast(x => x == "Dave"));
+        }
+
+        [TestMethod]
+        public void FindLast_ListDoesNotHaveItemThatMatchesPredicateCriteria_ReturnsItem()
+        {
+            GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie" };
+
+            Assert.AreEqual(null, myList.FindLast(x => x == "Greg"));
+        }
+
+        [TestMethod]
+        public void FindLast_ListHasMultipleItemsThatMeetMatchPredicate_ReturnsLastMatch()
+        {
+            GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie","Steve", "Carl" };
+
+            Assert.AreEqual("Steve", myList.FindLast(x => x == "Steve"));
+        }
+
+        [TestMethod]
+        public void FindLastIndex_ListHasMatchingItem_ReturnsIndexOfLastMatch()
+        {
+            GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie", "Steve", "Carl" };
+
+            Assert.AreEqual(2, myList.FindLastIndex(x => x == "Dave"));
+        }
+        [TestMethod]
+        public void FindLastIndex_ListDoesNotHaveItem_ReturnNegativeOne()
+        {
+            GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie", "Steve", "Carl" };
+
+            Assert.AreEqual(-1, myList.FindLastIndex(x => x == "Jeff"));
+        }
+
+        [TestMethod]
+        public void FindLastIndex_ListHasMultipleItemsFromIndex_ReturnsIndexOfLastMatch()
+        {
+            GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie", "Steve", "Carl" };
+
+            Assert.AreEqual(4, myList.FindLastIndex(1, x => x == "Steve"));
+        }
+
+        [TestMethod]
+        public void FindLastIndex_ListDoesNotHaveItemWithMathingCriteria_ReturnsNegativeOne()
+        {
+            GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie", "Steve", "Carl" };
+
+            Assert.AreEqual(-1, myList.FindLastIndex(4, x => x == "Adam"));
+        }
+
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        [TestMethod]
+        public void FindLastIndex_StartIndexOutOfRange()
+        {
+            GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie", "Steve", "Carl" };
+
+            myList.FindLastIndex(10, x => x == "Steve");
+        }
+
+        [TestMethod]
+        public void FindLastIndex_ListHasMultipleItemsFromIndexUpToCoount_ReturnsIndexOfLastMatch()
+        {
+            GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie", "Steve", "Carl", "Jeff" };
+
+            Assert.AreEqual(4, myList.FindLastIndex(1, 6, x => x == "Steve"));
+        }
+
+        [TestMethod]
+        public void FindLastIndex_ListDoesNotHaveItemWithMathingCriteriaUpToCount_ReturnsNegativeOne()
+        {
+            GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie", "Steve", "Carl" };
+
+            Assert.AreEqual(-1, myList.FindLastIndex(2, 4, x => x == "Adam"));
+        }
+
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        [TestMethod]
+        public void FindLastIndex_CountExceedsListCount_ThrowException()
+        {
+            GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie", "Steve", "Carl" };
+
+            myList.FindLastIndex(0,10, x => x == "Greg");
         }
 
     }
