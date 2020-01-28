@@ -168,6 +168,18 @@ namespace GenericList
             return newList;
         }
 
+        //public static GenericList<T> operator -(GenericList<T> listOne, GenericList<T> listTwo)
+        //{
+        //    GenericList<T> newList = MakeCopy(listOne);
+
+        //    foreach(T item in listTwo)
+        //    {
+        //        while (newList.Remove(item)) { }
+        //    }
+
+        //    return newList;
+        //}
+
         public GenericList<T> Zip(GenericList<T> list)
         {
             GenericList<T> newList = new GenericList<T>();
@@ -340,19 +352,51 @@ namespace GenericList
             return itemFound;
         }
 
-        public int GetIndexAt(T item)
+        public int IndexOf(T item)
         {
-            int indexFound = -1;
-
             for (int i = 0; i < Count; i++)
             {
                 if (items[i].Equals(item))
                 {
-                    indexFound = i;
-                    break;
+                    return i;
                 }
             }
-            return indexFound;
+            return -1;
+        }
+
+        public int IndexOf(T item, int index)
+        {
+            if(index >= Count)
+            {
+                throw new IndexOutOfRangeException();
+            }
+
+            for (int i = index; i < Count; i++)
+            {
+                if (this[i].Equals(item))
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        public int IndexOf(T item, int index, int count)
+        {
+            if (index >= Count)
+            {
+                throw new IndexOutOfRangeException();
+            }
+
+            for (int i = index; count > 0; i++)
+            {
+                if (this[i].Equals(item))
+                {
+                    return i;
+                }
+                count--;
+            }
+            return -1;
         }
 
         public void AddRange(IEnumerable<T> items)
@@ -375,8 +419,13 @@ namespace GenericList
 
         public void RemoveRange(int index, int count)
         {
+            if (index >= Count)
+            {
+                throw new IndexOutOfRangeException();
+            }
+
             int i = index;
-            while(i < Count && count > 0)
+            while (i < Count && count > 0)
             {
                 this.Remove(items[i]);
                 count--;
@@ -392,9 +441,14 @@ namespace GenericList
 
         public GenericList<T> GetRange(int index, int count)
         {
+            if (index >= Count)
+            {
+                throw new IndexOutOfRangeException();
+            }
+
             GenericList<T> newList = new GenericList<T>();
 
-            for(int i = index; i < Count && count > 0; i++)
+            for (int i = index; i < Count && count > 0; i++)
             {
                 newList.Add(items[i]);
                 count--;
@@ -405,6 +459,11 @@ namespace GenericList
         }
         public GenericList<T> GetRange(int index)
         {
+            if (index >= Count)
+            {
+                throw new IndexOutOfRangeException();
+            }
+
             GenericList<T> newList = new GenericList<T>();
 
             for (int i = index; i < Count; i++)
@@ -418,7 +477,7 @@ namespace GenericList
 
         public T[] CopyTo(T[] array, int arrayIndex)
         {
-            for(int i = 0; i < Count; i++)
+            for (int i = 0; i < Count; i++)
             {
                 array[arrayIndex] = items[i];
                 arrayIndex++;
@@ -428,7 +487,11 @@ namespace GenericList
 
         public T[] CopyTo(int index, T[] array, int arrayIndex, int count)
         {
-           
+            if (index >= Count)
+            {
+                throw new IndexOutOfRangeException();
+            }
+
             for (int i = index; count > 0; i++)
             {
                 array[arrayIndex] = this[i];
@@ -455,7 +518,7 @@ namespace GenericList
                 throw new ArgumentNullException();
             }
 
-            foreach(T item in this)
+            foreach (T item in this)
             {
                 if (match(item))
                 {
@@ -468,16 +531,16 @@ namespace GenericList
 
         public T Find(Predicate<T> match)
         {
-            if(match is null)
+            if (match is null)
             {
                 throw new ArgumentNullException();
             }
 
-            foreach(T item in this)
+            foreach (T item in this)
             {
                 if (match(item))
                 {
-                    return item;                
+                    return item;
                 }
             }
             return default;
@@ -492,7 +555,7 @@ namespace GenericList
             }
 
             int index = -1;
-            for(int i = 0; i < Count; i++)
+            for (int i = 0; i < Count; i++)
             {
                 if (match(items[i]))
                 {
@@ -507,6 +570,10 @@ namespace GenericList
             if (match is null)
             {
                 throw new ArgumentNullException();
+            }
+            if (startIndex >= Count)
+            {
+                throw new IndexOutOfRangeException();
             }
 
             int index = -1;
@@ -527,6 +594,10 @@ namespace GenericList
             {
                 throw new ArgumentNullException();
             }
+            if (startIndex >= Count)
+            {
+                throw new IndexOutOfRangeException();
+            }
 
             int index = -1;
             for (int i = startIndex; count > 0; i++)
@@ -543,20 +614,20 @@ namespace GenericList
 
         public void ForEach(Action<T> action)
         {
-            if(action is null)
+            if (action is null)
             {
                 throw new ArgumentNullException();
             }
-            foreach(T item in this)
+            foreach (T item in this)
             {
                 action(item);
             }
-        }   
+        }
 
         public GenericList<K> ConvertAll<K>(Converter<T, K> converter)
         {
             GenericList<K> newList = new GenericList<K>();
-            foreach(T item in this)
+            foreach (T item in this)
             {
                 newList.Add(converter(item));
             }

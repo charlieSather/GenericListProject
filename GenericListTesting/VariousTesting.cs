@@ -20,7 +20,7 @@ namespace GenericListTesting
         }
 
         [TestMethod]
-        public void TestListDoesNotContainItem()
+        public void Contains_TestListDoesNotContainItem()
         {
             GenericList<int> myList = new GenericList<int>();
 
@@ -30,33 +30,91 @@ namespace GenericListTesting
         }
 
         [TestMethod]
-        public void TestGetIndexAtHasItem()
+        public void IndexOf_ListHasItem()
         {
             GenericList<int> myList = new GenericList<int>();
 
             myList.AddRange(new List<int> { 1, 2, 3, 4, 5, 6 });
 
-            Assert.AreEqual(1, myList.GetIndexAt(2));
+            Assert.AreEqual(1, myList.IndexOf(2));
         }
 
         [TestMethod]
-        public void TestGetIndexAtHasItemAtEnd()
+        public void IndexOf_ListHasItemAtEnd()
         {
             GenericList<int> myList = new GenericList<int>();
 
             myList.AddRange(new List<int> { 1, 2, 3, 4, 5, 6 });
 
-            Assert.AreEqual(5, myList.GetIndexAt(6));
+            Assert.AreEqual(5, myList.IndexOf(6));
         }
 
         [TestMethod]
-        public void TestGetIndexDoesNotHaveItem()
+        public void IndexOf_ListDoesNotHaveItem()
         {
             GenericList<int> myList = new GenericList<int>();
 
             myList.AddRange(new List<int> { 1, 2, 3, 4, 5, 6 });
 
-            Assert.AreEqual(-1, myList.GetIndexAt(10));
+            Assert.AreEqual(-1, myList.IndexOf(10));
+        }
+        
+        [TestMethod]
+        public void IndexOf_ListDoesNotHaveItemFromIndex()
+        {
+            GenericList<int> myList = new GenericList<int>();
+
+            myList.AddRange(new List<int> { 1, 2, 3, 4, 5, 6 });
+
+            Assert.AreEqual(-1, myList.IndexOf(10,2));
+        }
+
+        [TestMethod]
+        public void IndexOf_ListHasItemFromIndex()
+        {
+            GenericList<int> myList = new GenericList<int>();
+
+            myList.AddRange(new List<int> { 1, 2, 3, 4, 5, 6 });
+            Assert.AreEqual(4, myList.IndexOf(5, 2));
+        }
+
+        [TestMethod]
+        public void IndexOf_ListHasItemFromIndexUpToCount()
+        {
+            GenericList<int> myList = new GenericList<int>();
+
+            myList.AddRange(new List<int> { 1, 2, 3, 4, 5, 6 });
+            Assert.AreEqual(4, myList.IndexOf(5, 2, 3));
+        }
+
+        [TestMethod]
+        public void IndexOf_ListDoesNotHaveItemFromIndexUpToCount()
+        {
+            GenericList<int> myList = new GenericList<int>();
+
+            myList.AddRange(new List<int> { 1, 2, 3, 4, 5, 6 });
+            Assert.AreEqual(-1, myList.IndexOf(10, 2, 3));
+        }
+
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        [TestMethod]
+        public void IndexOf_TestIndexOutOfRange()
+        {
+            GenericList<int> myList = new GenericList<int>();
+
+            myList.AddRange(new List<int> { 1, 2, 3, 4, 5, 6 });
+            myList.IndexOf(2, 10);
+        }
+
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        [TestMethod]
+        public void IndexOf_CountExceedsListCount_ExpectIndexOutOfRange()
+        {
+            GenericList<int> myList = new GenericList<int>();
+
+            myList.AddRange(new List<int> { 1, 2, 3, 4, 5, 6 });
+
+            myList.IndexOf(7, 0, 10);
         }
 
         [TestMethod]

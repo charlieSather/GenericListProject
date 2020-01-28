@@ -111,10 +111,10 @@ namespace GenericList
                 Console.WriteLine(item);
             }
 
-            GenericList<int> removeTest = new GenericList<int> { 1, 2, 3, 4, 5 };
+            GenericList<int> one1 = new GenericList<int> { 1, 2, 2, 2, 1 };
+            GenericList<int> two2 = new GenericList<int> { 2, 3, 4, 5 };
 
-            removeTest.Remove(5);
-
+            GenericList<int> result1 = one1 - two2;
 
             GenericList<string> newList = new GenericList<string> { "dave's", "List", "Can't", "Do", "This" };
 
