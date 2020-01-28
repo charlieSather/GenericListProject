@@ -816,6 +816,23 @@ namespace GenericList
                 capacity = Count;
             }
         }
+        public bool TrueForAll(Predicate<T> match)
+        {
+            if(match is null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            foreach(T item in this)
+            {
+                if (!match(item))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
 
 
         public IEnumerator GetEnumerator()

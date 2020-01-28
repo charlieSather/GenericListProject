@@ -696,8 +696,8 @@ namespace GenericListTesting
 
             myList.TrimExcess();
             Assert.AreEqual(16, myList.Capacity);
-
         }
+
         [TestMethod]
         public void TrimExcess_TestThresholdIsMet_CapacityIsEqualToCount()
         {
@@ -705,8 +705,44 @@ namespace GenericListTesting
 
             myList.TrimExcess();
             Assert.AreEqual(9, myList.Capacity);
-
         }
+
+        [ExpectedException(typeof(ArgumentNullException))]
+        [TestMethod]
+        public void TrueForAll_PredicateIsNull_ThrowNullArgException()
+        {
+            GenericList<int> myList = new GenericList<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+            myList.TrueForAll(null);
+        }
+
+        [TestMethod]
+        public void TrueForAll_SomeItemsDontMatchPredicate_ReturnsFalse()
+        {
+            GenericList<Person> myList = new GenericList<Person>
+            {
+                new Person("Charlie", 20),
+                new Person("Dave", 20),
+                new Person("Greg", 21),
+                new Person("Steven", 20),
+            };
+            Assert.AreEqual(false, myList.TrueForAll(age => age.age == 20));
+        }
+
+        [TestMethod]
+        public void TrueForAll_AllItemsMatchPreddicateCriteria_ReturnsTrue()
+        {
+            GenericList<Person> myList = new GenericList<Person>
+            {
+                new Person("Charlie", 20),
+                new Person("Dave", 20),
+                new Person("Greg", 20),
+                new Person("Steven", 20),
+            };
+            Assert.AreEqual(true, myList.TrueForAll(age => age.age == 20));
+        }
+
+
 
     }
 }
