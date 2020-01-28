@@ -447,6 +447,25 @@ namespace GenericList
             }
             return array;
         }
+
+        public bool Exists(Predicate<T> match)
+        {
+            if (match is null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            foreach(T item in this)
+            {
+                if (match(item))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
         public T Find(Predicate<T> match)
         {
             if(match is null)

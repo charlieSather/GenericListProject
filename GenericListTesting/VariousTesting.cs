@@ -224,6 +224,31 @@ namespace GenericListTesting
         }
 
         [TestMethod]
+        public void TestExistsReturnsTrueIfItemMatchesPredicateConditions()
+        {
+            GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie" };
+
+            Assert.AreEqual(true, myList.Exists(x => x == "Charlie"));
+        }
+
+        [TestMethod]
+        public void TestExistsReturnsFalseIfItemDoesNotMatchPredicateConditions()
+        {
+            GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie" };
+
+            Assert.AreEqual(false, myList.Exists(x => x == "Chris"));
+        }
+
+        [ExpectedException(typeof(ArgumentNullException))]
+        [TestMethod]
+        public void TestExistsThrowsArgumentNullExcecptionOnNullPredicate()
+        {
+            GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie" };
+
+            Assert.AreEqual(false, myList.Exists(null));
+        }
+
+        [TestMethod]
         public void TestFindindexOfString()
         {
             GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie" };
