@@ -128,8 +128,9 @@ namespace GenericList
 
             Console.WriteLine(myStrings.FindIndex(x => x == "Charlie"));
 
-            
 
+            GenericList<int> l = new GenericList<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+            myList.FindIndex(3, 10, x => x == 12);
 
             Console.ReadLine();
 

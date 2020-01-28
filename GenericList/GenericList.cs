@@ -431,7 +431,7 @@ namespace GenericList
            
             for (int i = index; count > 0; i++)
             {
-                array[arrayIndex] = items[i];
+                array[arrayIndex] = this[i];
                 arrayIndex++;
                 count--;
             }
@@ -480,7 +480,7 @@ namespace GenericList
             int index = -1;
             for (int i = startIndex; count > 0; i++)
             {
-                if (match(items[i]))
+                if (match(this[i]))
                 {
                     index = i;
                     break;
@@ -488,6 +488,16 @@ namespace GenericList
                 count--;
             }
             return index;
+        }
+
+        public GenericList<K> ConvertAll<K>(Converter<T, K> converter)
+        {
+            GenericList<K> newList = new GenericList<K>();
+            foreach(T item in this)
+            {
+                newList.Add(converter(item));
+            }
+            return newList;
         }
 
 

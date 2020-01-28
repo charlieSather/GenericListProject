@@ -266,7 +266,6 @@ namespace GenericListTesting
             GenericList<int> myList = new GenericList<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
             Assert.AreEqual(8, myList.FindIndex(3, 6, x => x == 9));
-
         }
 
         [ExpectedException(typeof(IndexOutOfRangeException))]
@@ -276,6 +275,27 @@ namespace GenericListTesting
             GenericList<int> myList = new GenericList<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
             Assert.AreEqual(3, myList.FindIndex(3, 10, x => x == 12));
+        }
+
+        [TestMethod]
+        public void TestConvertAllIntToString()
+        {
+            GenericList<int> myList = new GenericList<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+            GenericList<string> strList = myList.ConvertAll(new Converter<int, string>(x => x.ToString()));
+
+            Assert.AreEqual(myList[1].ToString(), strList[1]);
+
+        }
+
+        [TestMethod]
+        public void TestConvertAllStringToInt()
+        {
+            GenericList<string> strList = new GenericList<string> { "1","2", "3", "4", "5", "6" };
+
+            GenericList<int> intList = strList.ConvertAll(new Converter<string, int>(x => Int32.Parse(x)));
+
+            Assert.AreEqual(Int32.Parse(strList[1]), intList[1]);
 
         }
 
