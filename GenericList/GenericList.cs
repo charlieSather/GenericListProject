@@ -736,7 +736,7 @@ namespace GenericList
             {
                 throw new IndexOutOfRangeException();
             }
-            else if(collection is null)
+            else if (collection is null)
             {
                 throw new ArgumentNullException();
             }
@@ -745,8 +745,8 @@ namespace GenericList
                 AddRange(collection);
                 return;
             }
-           
-            foreach(T item in collection)
+
+            foreach (T item in collection)
             {
                 Insert(index, item);
                 index++;
@@ -758,7 +758,7 @@ namespace GenericList
             int removed = 0;
             int i = 0;
 
-            while(i < Count)
+            while (i < Count)
             {
                 if (match(this[i]))
                 {
@@ -770,7 +770,7 @@ namespace GenericList
                     i++;
                 }
             }
-            return removed;            
+            return removed;
         }
 
         public void RemoveAt(int index)
@@ -779,7 +779,7 @@ namespace GenericList
             {
                 throw new ArgumentOutOfRangeException();
             }
-            else if(index == Count - 1)
+            else if (index == Count - 1)
             {
                 items[Count - 1] = default;
             }
@@ -793,6 +793,30 @@ namespace GenericList
             items[counter] = default;
             count--;
         }
+
+        public T[] ToArray()
+        {
+            T[] arr = new T[Count];
+
+            for (int i = 0; i < Count; i++)
+            {
+                arr[i] = items[i];
+            }
+
+            return arr;
+        }
+
+
+        //the TrimExcess method does nothing if the list is at more than 90 percent of capacity.
+        public void TrimExcess()
+        {
+            if (((double) Count / (double)Capacity) < 0.9)
+            {
+                items = ToArray();
+                capacity = Count;
+            }
+        }
+
 
         public IEnumerator GetEnumerator()
         {

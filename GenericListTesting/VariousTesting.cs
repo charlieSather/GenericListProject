@@ -620,12 +620,12 @@ namespace GenericListTesting
         [TestMethod]
         public void InsertRange_InsertCollectionIntoMiddleOfList()
         {
-            GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave","Chris" };
+            GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Chris" };
 
             myList.InsertRange(2, new GenericList<string> { "Jeff", "Greg", "Steve" });
             Assert.AreEqual("AdamSteveJeffGregSteveDaveChris", myList.ToString());
         }
-        
+
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         [TestMethod]
         public void RemoveAt_ZeroIndexEmptyArray()
@@ -660,6 +660,52 @@ namespace GenericListTesting
 
             myList.RemoveAt(4);
             Assert.AreEqual("12346789", myList.ToString());
+        }
+
+        [TestMethod]
+        public void RemoveAll_RemovesAllOccurrencesOfCriteriaMet()
+        {
+            GenericList<int> myList = new GenericList<int> { 1, 2, 3, 2, 5, 6, 2, 8, 2 };
+
+            myList.RemoveAll(x => x == 2);
+            Assert.AreEqual("13568", myList.ToString());
+        }
+
+        [TestMethod]
+        public void ToArray_TestEmptyList()
+        {
+            GenericList<int> myList = new GenericList<int>();
+
+            int[] result = myList.ToArray();
+            Assert.AreEqual(0, result.Length);
+        }
+
+        [TestMethod]
+        public void ToArray_TestCopy()
+        {
+            GenericList<int> myList = new GenericList<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+            int[] result = myList.ToArray();
+            Assert.AreEqual(4, result[3]);
+        }
+
+        [TestMethod]
+        public void TrimExcess_TestThresholdIsntMet_ExpectCapacityToRemainSame()
+        {
+            GenericList<int> myList = new GenericList<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
+
+            myList.TrimExcess();
+            Assert.AreEqual(16, myList.Capacity);
+
+        }
+        [TestMethod]
+        public void TrimExcess_TestThresholdIsMet_CapacityIsEqualToCount()
+        {
+            GenericList<int> myList = new GenericList<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+            myList.TrimExcess();
+            Assert.AreEqual(9, myList.Capacity);
+
         }
 
     }

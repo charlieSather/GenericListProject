@@ -10,16 +10,15 @@ namespace GenericList
     {
         static void Main(string[] args)
         {
-            GenericList<string> myList = new GenericList<string> { "Adam", "Steve", "Dave", "Charlie" };
+          
+            List<int> ints = new List<int> { 1, 2, 3, 4, 5 };
+            int[] toArr = ints.ToArray();
 
-            myList.Insert(2, "Jeff");
+            GenericList<int> myList = new GenericList<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
-            myList.AddRange(new List<string> { "dave", "charlie" });
+            myList.TrimExcess();
 
-            myList.AddRange(new GenericList<string> { "steve", "adam" });
-
-            Console.WriteLine(myList.ToString());
-
+            Console.WriteLine();
 
 
             Console.ReadLine();
