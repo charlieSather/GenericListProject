@@ -18,7 +18,6 @@ namespace GenericList
         public int Count { get { return count; } }
         int capacity;
         static int _capacity;
-
         public int Capacity
         {
             get
@@ -37,7 +36,6 @@ namespace GenericList
                 }
             }
         }
-
         public GenericList()
         {
             items = new T[0];
@@ -177,29 +175,29 @@ namespace GenericList
         //    return newList;
         //}
 
-        public GenericList<T> Zip(GenericList<T> list)
+        public static GenericList<T> Zip(GenericList<T> listOne, GenericList<T> listTwo)
         {
             GenericList<T> newList = new GenericList<T>();
 
-            if (Count < list.Count)
+            if (listOne.Count < listTwo.Count)
             {
-                for (int i = 0; i < list.Count; i++)
+                for (int i = 0; i < listTwo.Count; i++)
                 {
-                    if (i < Count)
+                    if (i < listOne.Count)
                     {
-                        newList.Add(this[i]);
+                        newList.Add(listOne[i]);
                     }
-                    newList.Add(list[i]);
+                    newList.Add(listTwo[i]);
                 }
             }
             else
             {
-                for (int i = 0; i < Count; i++)
+                for (int i = 0; i < listOne.Count; i++)
                 {
-                    newList.Add(this[i]);
-                    if (i < list.Count)
+                    newList.Add(listOne[i]);
+                    if (i < listTwo.Count)
                     {
-                        newList.Add(list[i]);
+                        newList.Add(listTwo[i]);
                     }
                 }
             }

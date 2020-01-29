@@ -13,7 +13,7 @@ namespace GenericListTesting
             GenericList<int> odd = new GenericList<int> { 1, 3, 5 };
             GenericList<int> even = new GenericList<int> { 2, 4, 6 };
 
-            GenericList<int> result = odd.Zip(even);
+            GenericList<int> result = GenericList<int>.Zip(odd,even);
             Assert.AreEqual(2, result[1]);
         }
 
@@ -23,7 +23,7 @@ namespace GenericListTesting
             GenericList<int> odd = new GenericList<int> { 1, 3, 5 };
             GenericList<int> even = new GenericList<int> { 2 };
 
-            GenericList<int> result = odd.Zip(even);
+            GenericList<int> result = GenericList<int>.Zip(odd,even);
             Assert.AreEqual(2, result[1]);
         }
 
@@ -33,7 +33,7 @@ namespace GenericListTesting
             GenericList<int> odd = new GenericList<int>() { 1, 3 };
             GenericList<int> even = new GenericList<int> { 2, 4, 6 };
 
-            GenericList<int> result = odd.Zip(even);
+            GenericList<int> result = GenericList<int>.Zip(odd,even);
             Assert.AreEqual(4, result[3]);
         }
 
@@ -43,7 +43,7 @@ namespace GenericListTesting
             GenericList<int> odd = new GenericList<int>() { 1 };
             GenericList<int> even = new GenericList<int> { 2, 4, 6 };
 
-            GenericList<int> result = odd.Zip(even);
+            GenericList<int> result = GenericList<int>.Zip(odd,even);
             Assert.AreEqual(4, result.Count);
         }
 
@@ -53,7 +53,7 @@ namespace GenericListTesting
             GenericList<int> odd = new GenericList<int>() { 1, 3, 5 };
             GenericList<int> even = new GenericList<int>();
 
-            GenericList<int> result = odd.Zip(even);
+            GenericList<int> result = GenericList<int>.Zip(odd,even);
             Assert.AreEqual(odd.Count, result.Count);
         }
     }

@@ -833,5 +833,45 @@ namespace GenericListTesting
             Assert.AreEqual("(Charlie,15)(Charlie,20)(Dave,22)(Greg,23)(Steven,21)", myList.ToString());
         }
 
+        [TestMethod]
+        public void Sort_TestQuickSortInts()
+        {
+            GenericList<int> myList = new GenericList<int> { 10, 15, 5, 8, 2, 3, 11, 9, 1, 0, 1 };
+            myList.QuickSort();
+
+            Assert.AreEqual("01123589101115", myList.ToString());
+        }
+
+        [TestMethod]
+        public void Sort_TestMergeSortInts()
+        {
+            GenericList<int> myList = new GenericList<int> { 10, 15, 5, 8, 2, 3, 11, 9, 1, 0, 1 };
+            myList.Sort();
+
+            Assert.AreEqual("01123589101115", myList.ToString());
+        }
+
+
+        [TestMethod]
+        public void Sort_TestQuickSortStrings()
+        {
+            GenericList<string> myList = new GenericList<string> { "Nathan","Adam","Zack","Michael","Greg","Nick","Charlie" };
+            myList.QuickSort();
+
+            Assert.AreEqual("AdamCharlieGregMichaelNathanNickZack", myList.ToString());
+        }
+
+        [TestMethod]
+        public void Sort_TestMergeSortStrings()
+        {
+            GenericList<string> myList = new GenericList<string> { "Nathan", "Adam", "Zack", "Michael", "Greg", "Nick", "Charlie" };
+            myList.Sort();
+
+            Assert.AreEqual("AdamCharlieGregMichaelNathanNickZack", myList.ToString());
+        }
+
+
+
+
     }
 }
